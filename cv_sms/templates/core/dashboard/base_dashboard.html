@@ -86,16 +86,9 @@
                     Ringkasan Dashboard
                 </a>
 
-                <a href="{% url 'dashboard_order_list' %}" class="flex items-center justify-between px-4 py-3 rounded-xl transition {% if 'order' in request.resolver_match.url_name %}bg-[#8080FF] text-white shadow-md shadow-[#8080FF]/20 font-bold{% else %}text-slate-400 hover:text-white hover:bg-slate-800{% endif %}">
-                    <div class="flex items-center gap-3">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-                        Transaksi & Bukti Transfer
-                    </div>
-                </a>
-
                 <a href="{% url 'dashboard_product_list' %}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition {% if 'product' in request.resolver_match.url_name %}bg-[#FF807F] text-white shadow-md shadow-[#FF807F]/20 font-bold{% else %}text-slate-400 hover:text-white hover:bg-slate-800{% endif %}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-                    Kelola Produk
+                    Kelola Produk Pabrik
                 </a>
 
                 <a href="{% url 'dashboard_settings' %}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition {% if request.resolver_match.url_name == 'dashboard_settings' %}bg-[#8080FF] text-white shadow-md shadow-[#8080FF]/20 font-bold{% else %}text-slate-400 hover:text-white hover:bg-slate-800{% endif %}">
@@ -103,19 +96,9 @@
                     Profil Perusahaan
                 </a>
 
-                <a href="{% url 'dashboard_bank_list' %}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition {% if 'bank' in request.resolver_match.url_name %}bg-[#8080FF] text-white shadow-md font-bold{% else %}text-slate-400 hover:text-white hover:bg-slate-800{% endif %}">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
-                    Rekening Bank Tujuan
-                </a>
-
-                <a href="{% url 'dashboard_customer_list' %}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition {% if 'customer' in request.resolver_match.url_name %}bg-[#8080FF] text-white shadow-md font-bold{% else %}text-slate-400 hover:text-white hover:bg-slate-800{% endif %}">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-                    Data Pelanggan
-                </a>
-
                 <a href="{% url 'dashboard_user_list' %}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition {% if 'user' in request.resolver_match.url_name %}bg-[#8080FF] text-white shadow-md font-bold{% else %}text-slate-400 hover:text-white hover:bg-slate-800{% endif %}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/></svg>
-                    User Internal (Staf/Admin)
+                    Pengguna Staf (Admin)
                 </a>
 
                 <div class="pt-4 border-t border-slate-800 my-2"></div>

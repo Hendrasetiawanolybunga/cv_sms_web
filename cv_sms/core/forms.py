@@ -117,7 +117,7 @@ class CheckoutForm(forms.ModelForm):
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['name', 'price', 'unit', 'description', 'image', 'is_active']
+        fields = ['name', 'price', 'unit', 'min_order', 'step_order', 'description', 'image', 'is_active']
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#FF807F] transition',
@@ -130,6 +130,16 @@ class ProductForm(forms.ModelForm):
             'unit': forms.TextInput(attrs={
                 'class': 'w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#FF807F] transition',
                 'placeholder': 'kg, lusin, unit, roll, meter'
+            }),
+            'min_order': forms.NumberInput(attrs={
+                'class': 'w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#FF807F] transition',
+                'min': '1',
+                'placeholder': 'Contoh: 50'
+            }),
+            'step_order': forms.NumberInput(attrs={
+                'class': 'w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#FF807F] transition',
+                'min': '1',
+                'placeholder': 'Contoh: 10'
             }),
             'description': forms.Textarea(attrs={
                 'rows': 4,
@@ -149,7 +159,7 @@ class ProductForm(forms.ModelForm):
 class CompanyProfileForm(forms.ModelForm):
     class Meta:
         model = CompanyProfile
-        fields = ['hero_title', 'hero_subtitle', 'about_text', 'address', 'phone_office', 'phone_whatsapp', 'email', 'hero_image']
+        fields = ['hero_title', 'hero_subtitle', 'about_text', 'address', 'opening_hours', 'phone_office', 'phone_whatsapp_1', 'phone_whatsapp_2', 'email', 'hero_image']
         widgets = {
             'hero_title': forms.TextInput(attrs={
                 'class': 'w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#FF807F] transition'
@@ -166,11 +176,21 @@ class CompanyProfileForm(forms.ModelForm):
                 'rows': 2,
                 'class': 'w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#FF807F] transition'
             }),
-            'phone_office': forms.TextInput(attrs={
-                'class': 'w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#FF807F] transition'
+            'opening_hours': forms.TextInput(attrs={
+                'class': 'w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#FF807F] transition',
+                'placeholder': 'Contoh: Senin - Sabtu: 08.00 - 17.00 WIB'
             }),
-            'phone_whatsapp': forms.TextInput(attrs={
-                'class': 'w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#FF807F] transition'
+            'phone_office': forms.TextInput(attrs={
+                'class': 'w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#FF807F] transition',
+                'placeholder': 'Contoh: 031-8793055'
+            }),
+            'phone_whatsapp_1': forms.TextInput(attrs={
+                'class': 'w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#FF807F] transition',
+                'placeholder': 'Contoh: 081-330780729'
+            }),
+            'phone_whatsapp_2': forms.TextInput(attrs={
+                'class': 'w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#FF807F] transition',
+                'placeholder': 'Contoh: 082-232377866'
             }),
             'email': forms.EmailInput(attrs={
                 'class': 'w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#FF807F] transition'

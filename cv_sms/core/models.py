@@ -1,7 +1,20 @@
+import re
 import uuid
 from django.db import models
 from django.utils.text import slugify
 from django.contrib.auth.hashers import make_password, check_password
+
+
+def clean_wa_number(phone_str):
+    if not phone_str:
+        return ""
+    # Ambil hanya digit
+    digits = re.sub(r'\D', '', str(phone_str))
+    if digits.startswith('0'):
+        digits = '62' + digits[1:]
+    elif digits.startswith('8'):
+        digits = '62' + digits
+    return digits
 
 
 class CompanyProfile(models.Model):
@@ -9,8 +22,11 @@ class CompanyProfile(models.Model):
     hero_subtitle = models.TextField(blank=True, default='Penyedia Kain Majun, Sarung Tangan, Tali Rafia, Masker, & Mesin Industri Berkualitas.')
     about_text = models.TextField(blank=True)
     address = models.TextField(blank=True)
+    opening_hours = models.CharField(max_length=150, default='Senin - Sabtu: 08.00 - 17.00 WIB', blank=True, verbose_name="Jam Operasional")
     phone_office = models.CharField(max_length=50, blank=True)
-    phone_whatsapp = models.CharField(max_length=50, blank=True)
+    phone_whatsapp = models.CharField(max_length=100, blank=True)
+    phone_whatsapp_1 = models.CharField(max_length=30, default='081-330780729', verbose_name='WhatsApp Utama')
+    phone_whatsapp_2 = models.CharField(max_length=30, default='082-232377866', blank=True, verbose_name='WhatsApp Alternatif')
     email = models.EmailField(blank=True)
     hero_image = models.ImageField(upload_to='company/', blank=True, null=True)
 
@@ -22,16 +38,16 @@ class CompanyProfile(models.Model):
         return self.hero_title
 
     @property
+    def wa_url_1(self):
+        return clean_wa_number(self.phone_whatsapp_1)
+
+    @property
+    def wa_url_2(self):
+        return clean_wa_number(self.phone_whatsapp_2)
+
+    @property
     def clean_whatsapp(self):
-        if not self.phone_whatsapp:
-            return ""
-        # Remove non-digits
-        digits = "".join(ch for ch in self.phone_whatsapp if ch.isdigit())
-        if digits.startswith("0"):
-            digits = "62" + digits[1:]
-        elif digits.startswith("8"):
-            digits = "62" + digits
-        return digits
+        return self.wa_url_1 or clean_wa_number(self.phone_whatsapp)
 
 
 class BankAccount(models.Model):
@@ -54,6 +70,8 @@ class Product(models.Model):
     slug = models.SlugField(max_length=250, unique=True, blank=True)
     price = models.DecimalField(max_digits=14, decimal_places=2)
     unit = models.CharField(max_length=50, default='kg', help_text='Contoh: kg, lusin, unit, roll')
+    min_order = models.PositiveIntegerField(default=1, verbose_name="Minimal Order")
+    step_order = models.PositiveIntegerField(default=1, verbose_name="Kelipatan Order")
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to='products/', blank=True, null=True)
     is_active = models.BooleanField(default=True)

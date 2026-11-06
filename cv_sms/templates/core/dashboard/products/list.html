@@ -36,7 +36,7 @@
                         <th class="pb-3 pl-2">Foto</th>
                         <th class="pb-3">Nama Produk</th>
                         <th class="pb-3">Harga</th>
-                        <th class="pb-3">Satuan</th>
+                        <th class="pb-3">Min. Order</th>
                         <th class="pb-3">Status Tampil</th>
                         <th class="pb-3">Tanggal Dibuat</th>
                         <th class="pb-3 pr-2 text-right">Aksi</th>
@@ -59,10 +59,12 @@
                             <span class="block text-[11px] font-mono text-slate-400 font-normal">slug: {{ product.slug }}</span>
                         </td>
                         <td class="py-4 font-extrabold text-[#FF807F]">
-                            {{ product.formatted_price }}
+                            {{ product.formatted_price }} <span class="text-slate-400 text-[11px] font-normal">/ {{ product.unit }}</span>
                         </td>
-                        <td class="py-4 font-semibold text-slate-600">
-                            / {{ product.unit }}
+                        <td class="py-4">
+                            <span class="px-2 py-0.5 rounded-lg bg-amber-50 text-amber-700 font-bold text-[11px] border border-amber-200">
+                                Min. {{ product.min_order }} {{ product.unit }}
+                            </span>
                         </td>
                         <td class="py-4">
                             {% if product.is_active %}

@@ -53,6 +53,31 @@
                 </div>
             </div>
 
+            <!-- B2B Order Parameters -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                        Minimal Order Pabrik (Min. Order) <span class="text-rose-500">*</span>
+                    </label>
+                    {{ form.min_order }}
+                    <span class="text-[11px] text-slate-400 mt-0.5 block">Misal: 50 untuk Kain Majun, 250 untuk Tali Rafia</span>
+                    {% if form.min_order.errors %}
+                        <p class="text-xs text-rose-500 mt-1">{{ form.min_order.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                        Kelipatan Pemesanan (Step) <span class="text-rose-500">*</span>
+                    </label>
+                    {{ form.step_order }}
+                    <span class="text-[11px] text-slate-400 mt-0.5 block">Misal: 10, 25, atau 1</span>
+                    {% if form.step_order.errors %}
+                        <p class="text-xs text-rose-500 mt-1">{{ form.step_order.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
             <div>
                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
                     Deskripsi Produk

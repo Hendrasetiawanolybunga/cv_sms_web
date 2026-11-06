@@ -47,8 +47,11 @@ class Command(BaseCommand):
                     'Dengan komitmen menjaga mutu, ketersediaan stok, dan pelayanan cepat, kami siap menjadi mitra bisnis jangka panjang Anda.'
                 ),
                 'address': 'Jln. Wisma Kedung Asem Indah J-30 Surabaya',
+                'opening_hours': 'Senin - Sabtu: 08.00 - 17.00 WIB',
                 'phone_office': '031-8793055',
-                'phone_whatsapp': '081330780729 / 082232377866',
+                'phone_whatsapp': '081-330780729 / 082-232377866',
+                'phone_whatsapp_1': '081-330780729',
+                'phone_whatsapp_2': '082-232377866',
                 'email': 'setia.makmur60@yahoo.com',
             }
         )
@@ -63,20 +66,25 @@ class Command(BaseCommand):
                 'Dengan komitmen menjaga mutu, ketersediaan stok, dan pelayanan cepat, kami siap menjadi mitra bisnis jangka panjang Anda.'
             )
             profile.address = 'Jln. Wisma Kedung Asem Indah J-30 Surabaya'
+            profile.opening_hours = 'Senin - Sabtu: 08.00 - 17.00 WIB'
             profile.phone_office = '031-8793055'
-            profile.phone_whatsapp = '081330780729 / 082232377866'
+            profile.phone_whatsapp = '081-330780729 / 082-232377866'
+            profile.phone_whatsapp_1 = '081-330780729'
+            profile.phone_whatsapp_2 = '082-232377866'
             profile.email = 'setia.makmur60@yahoo.com'
             profile.save()
             self.stdout.write(self.style.SUCCESS('[OK] Profil Perusahaan diperbarui'))
         else:
             self.stdout.write(self.style.SUCCESS('[OK] Profil Perusahaan dibuat'))
 
-        # 3. 6 Produk Awal
+        # 3. 6 Produk Awal (Katalog B2B Pabrik)
         initial_products = [
             {
                 'name': 'Kain Majun',
                 'price': Decimal('5500.00'),
                 'unit': 'kg',
+                'min_order': 50,
+                'step_order': 10,
                 'description': 'Kain majun katun bersih, daya serap tinggi untuk lap oli, mesin pabrik, dan bengkel industri.',
                 'is_active': True,
             },
@@ -84,6 +92,8 @@ class Command(BaseCommand):
                 'name': 'Sarung Tangan',
                 'price': Decimal('18000.00'),
                 'unit': 'lusin',
+                'min_order': 10,
+                'step_order': 1,
                 'description': 'Sarung tangan rajut kerja tebal dan lentur untuk melindungi tangan di area gudang dan produksi.',
                 'is_active': True,
             },
@@ -91,6 +101,8 @@ class Command(BaseCommand):
                 'name': 'Tali Rafia',
                 'price': Decimal('14000.00'),
                 'unit': 'kg',
+                'min_order': 250,
+                'step_order': 25,
                 'description': 'Tali rafia super alot, tahan tarikan kencang, ideal untuk pengemasan kargo dan barang industri.',
                 'is_active': True,
             },
@@ -98,6 +110,8 @@ class Command(BaseCommand):
                 'name': 'Mesin Produksi',
                 'price': Decimal('90000000.00'),
                 'unit': 'unit',
+                'min_order': 1,
+                'step_order': 1,
                 'description': 'Mesin industri performa tinggi untuk lini manufaktur dengan efisiensi daya dan durabilitas tinggi.',
                 'is_active': True,
             },
@@ -105,6 +119,8 @@ class Command(BaseCommand):
                 'name': 'Mesin Gulung',
                 'price': Decimal('6500000.00'),
                 'unit': 'unit',
+                'min_order': 1,
+                'step_order': 1,
                 'description': 'Mesin penggulung tali dan kain berkecepatan presisi, mudah diatur dan minim perawatan.',
                 'is_active': True,
             },
@@ -112,6 +128,8 @@ class Command(BaseCommand):
                 'name': 'Masker',
                 'price': Decimal('6000.00'),
                 'unit': 'lusin',
+                'min_order': 100,
+                'step_order': 10,
                 'description': 'Masker pelindung debu dan partikel halus, nyaman digunakan untuk pekerja konveksi dan pabrik.',
                 'is_active': True,
             },
@@ -125,10 +143,12 @@ class Command(BaseCommand):
             if not p_created:
                 prod.price = p_data['price']
                 prod.unit = p_data['unit']
+                prod.min_order = p_data['min_order']
+                prod.step_order = p_data['step_order']
                 prod.description = p_data['description']
                 prod.is_active = True
                 prod.save()
-            self.stdout.write(self.style.SUCCESS(f'[OK] Produk: {prod.name} ({prod.formatted_price}/{prod.unit})'))
+            self.stdout.write(self.style.SUCCESS(f'[OK] Produk: {prod.name} ({prod.formatted_price}/{prod.unit}, Min. Order: {prod.min_order})'))
 
         # 4. Bank Accounts
         banks = [

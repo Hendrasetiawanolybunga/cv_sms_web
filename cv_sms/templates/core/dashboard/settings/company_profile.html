@@ -98,7 +98,18 @@
                     {% endif %}
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                        Jam Operasional Gudang & Kantor
+                    </label>
+                    {{ form.opening_hours }}
+                    <span class="text-[11px] text-slate-400 mt-0.5 block">Contoh: Senin - Sabtu: 08.00 - 17.00 WIB</span>
+                    {% if form.opening_hours.errors %}
+                        <p class="text-xs text-rose-500 mt-1">{{ form.opening_hours.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
                         <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
                             Telepon Kantor
@@ -111,13 +122,26 @@
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                            HP / WhatsApp
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            WhatsApp 1 (Utama)
                         </label>
-                        {{ form.phone_whatsapp }}
-                        <span class="text-[11px] text-slate-400 mt-0.5 block">Contoh: 081-330780729 / 082 232377866</span>
-                        {% if form.phone_whatsapp.errors %}
-                            <p class="text-xs text-rose-500 mt-1">{{ form.phone_whatsapp.errors.0 }}</p>
+                        {{ form.phone_whatsapp_1 }}
+                        <span class="text-[11px] text-slate-400 mt-0.5 block">Contoh: 081-330780729</span>
+                        {% if form.phone_whatsapp_1.errors %}
+                            <p class="text-xs text-rose-500 mt-1">{{ form.phone_whatsapp_1.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                            WhatsApp 2 (Alternatif)
+                        </label>
+                        {{ form.phone_whatsapp_2 }}
+                        <span class="text-[11px] text-slate-400 mt-0.5 block">Contoh: 082-232377866</span>
+                        {% if form.phone_whatsapp_2.errors %}
+                            <p class="text-xs text-rose-500 mt-1">{{ form.phone_whatsapp_2.errors.0 }}</p>
                         {% endif %}
                     </div>
                 </div>

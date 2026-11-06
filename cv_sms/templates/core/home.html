@@ -1,7 +1,7 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
-{% block title %}{{ company_profile.hero_title|default:"CV. Setia Makmur Surabaya" }} - Supplier Kain Majun, Sarung Tangan, & Mesin Industri{% endblock %}
+{% block title %}{{ company_profile.hero_title|default:"CV. Setia Makmur Surabaya" }} - Supplier Pabrik Kain Majun, Sarung Tangan, & Mesin Industri{% endblock %}
 
 {% block content %}
 <!-- HERO SECTION -->
@@ -17,26 +17,26 @@
             <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
                 <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FF807F]/10 border border-[#FF807F]/20 text-[#FF807F] text-xs font-extrabold tracking-wide uppercase">
                     <span class="w-2 h-2 rounded-full bg-[#FF807F] animate-pulse"></span>
-                    Supplier Resmi Industri & Konveksi Surabaya
+                    Distributor & Produsen Pabrik Surabaya
                 </div>
 
                 <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-[#1E293B] tracking-tight leading-[1.15]">
-                    Solusi Terpercaya Kebutuhan <span class="brand-gradient-text">Industri & Pabrik</span> Anda
+                    Katalog Resmi Pengadaan <span class="brand-gradient-text">Industri & Pabrik</span>
                 </h1>
 
                 <p class="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal">
-                    {{ company_profile.hero_subtitle|default:"Menyediakan kain majun, sarung tangan kerja, tali rafia, masker, serta mesin industri berkualitas dengan jaminan harga grosir terbaik dan stok selalu siap." }}
+                    {{ company_profile.hero_subtitle|default:"Menyediakan kain majun, sarung tangan kerja, tali rafia, masker, serta mesin industri berkualitas dengan jaminan harga grosir pabrik dan stok siap kirim berkala." }}
                 </p>
 
                 <!-- CTA Buttons -->
                 <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
                     <a href="#products" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-[#FF807F] hover:bg-[#f26e6d] text-white font-bold text-base shadow-lg shadow-[#FF807F]/30 hover:shadow-xl hover:shadow-[#FF807F]/40 transition transform hover:-translate-y-0.5 text-center flex items-center justify-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
-                        Lihat Katalog Produk
+                        Lihat Katalog Pabrik
                     </a>
-                    <a href="https://wa.me/{{ company_profile.clean_whatsapp|default:'6281330780729' }}?text=Halo%20CV.%20Setia%20Makmur%20Surabaya,%20saya%20tertarik%20dengan%20produk%20Anda" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white hover:bg-slate-50 text-[#1E293B] border-2 border-slate-200 font-bold text-base shadow-sm transition transform hover:-translate-y-0.5 text-center flex items-center justify-center gap-2">
+                    <a href="https://wa.me/{{ company_profile.wa_url_1|default:'6281330780729' }}?text=Halo%20CV.%20Setia%20Makmur%20Surabaya,%20saya%20ingin%20berkonsultasi%20mengenai%20pemesanan%20produk%20pabrik" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white hover:bg-slate-50 text-[#1E293B] border-2 border-slate-200 font-bold text-base shadow-sm transition transform hover:-translate-y-0.5 text-center flex items-center justify-center gap-2">
                         <svg class="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
-                        Hubungi WhatsApp
+                        Konsultasi WhatsApp
                     </a>
                 </div>
 
@@ -83,15 +83,15 @@
                 <div class="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200">
                     <div>
                         <div class="text-xl sm:text-2xl font-black text-[#1E293B]">100%</div>
-                        <div class="text-xs text-slate-500 font-medium">Kualitas Terjamin</div>
+                        <div class="text-xs text-slate-500 font-medium">Standar Industri</div>
                     </div>
                     <div>
                         <div class="text-xl sm:text-2xl font-black text-[#8080FF]">Grosir</div>
-                        <div class="text-xs text-slate-500 font-medium">Harga Terbaik</div>
+                        <div class="text-xs text-slate-500 font-medium">Harga Pabrik Langsung</div>
                     </div>
                     <div>
-                        <div class="text-xl sm:text-2xl font-black text-[#FF807F]">Cepat</div>
-                        <div class="text-xs text-slate-500 font-medium">Siap Kirim Rutin</div>
+                        <div class="text-xl sm:text-2xl font-black text-[#FF807F]">Rutin</div>
+                        <div class="text-xs text-slate-500 font-medium">Suplai Pabrik Kontrak</div>
                     </div>
                 </div>
             </div>
@@ -99,8 +99,9 @@
             <!-- Right Hero Card / Visual -->
             <div class="lg:col-span-5 relative">
                 <div class="relative mx-auto max-w-md bg-white rounded-3xl p-6 shadow-2xl border border-slate-100">
-                    <div class="absolute -top-3 -right-3 px-3 py-1 bg-[#8080FF] text-white text-xs font-bold rounded-full shadow-md">
-                        Siap Kirim ke Pabrik
+                    <div class="absolute -top-3 -right-3 px-3 py-1 bg-emerald-500 text-white text-xs font-bold rounded-full shadow-md flex items-center gap-1">
+                        <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+                        B2B Suplai & Pesan WA
                     </div>
 
                     {% if company_profile.hero_image %}
@@ -134,12 +135,10 @@
                                 <span class="text-slate-500">Standar keselamatan kerja nyaman</span>
                             </div>
                         </div>
-                        <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
-                            <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-sm">✓</div>
-                            <div class="text-xs">
-                                <span class="font-bold text-slate-800 block">Mesin Industri & Tali Rafia</span>
-                                <span class="text-slate-500">Awet, bertenaga, dan teruji</span>
-                            </div>
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-sm">✓</div>
+                        <div class="text-xs">
+                            <span class="font-bold text-slate-800 block">Mesin Industri & Tali Rafia</span>
+                            <span class="text-slate-500">Awet, bertenaga, dan teruji di lapangan</span>
                         </div>
                     </div>
                 </div>
@@ -172,7 +171,7 @@
                 </div>
                 <h3 class="text-lg font-bold text-[#1E293B] mb-2">Kualitas Bahan Terpilih</h3>
                 <p class="text-sm text-slate-500 leading-relaxed">
-                    Setiap kain majun, sarung tangan, masker, dan tali rafia kami melewati seleksi ketat untuk memastikan daya guna optimal di lapangan.
+                    Setiap kain majun, sarung tangan, masker, dan tali rafia kami melewati seleksi ketat untuk memastikan daya guna optimal di pabrik.
                 </p>
             </div>
 
@@ -180,9 +179,9 @@
                 <div class="w-14 h-14 rounded-2xl bg-[#8080FF]/20 text-[#8080FF] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 </div>
-                <h3 class="text-lg font-bold text-[#1E293B] mb-2">Harga Grosir Bersaing</h3>
+                <h3 class="text-lg font-bold text-[#1E293B] mb-2">Harga Grosir Pabrik Bersaing</h3>
                 <p class="text-sm text-slate-500 leading-relaxed">
-                    Skema harga langsung dari pusat distribusi, memudahkan efisiensi anggaran operasional pabrik, bengkel, dan konveksi Anda.
+                    Skema harga langsung dari pusat distribusi, memudahkan efisiensi anggaran pengadaan pabrik, bengkel, dan konveksi Anda.
                 </p>
             </div>
 
@@ -190,9 +189,9 @@
                 <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                 </div>
-                <h3 class="text-lg font-bold text-[#1E293B] mb-2">Respon Cepat & Siap Kirim</h3>
+                <h3 class="text-lg font-bold text-[#1E293B] mb-2">Respon Cepat & Siap Kirim Rutin</h3>
                 <p class="text-sm text-slate-500 leading-relaxed">
-                    Staf siap melayani pesanan kilat, suplai berkala mingguan/bulanan, hingga pengiriman armada langsung ke lokasi industri Anda.
+                    Staf siap melayani pemesanan via WhatsApp, jadwal suplai berkala mingguan/bulanan, hingga pengiriman armada langsung ke lokasi industri Anda.
                 </p>
             </div>
         </div>
@@ -207,19 +206,19 @@
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
             <div>
                 <span class="text-[#FF807F] text-xs font-extrabold uppercase tracking-widest bg-[#FF807F]/10 px-3 py-1 rounded-full">
-                    Katalog Unggulan
+                    Katalog Pabrik & B2B
                 </span>
                 <h2 class="text-3xl sm:text-4xl font-extrabold text-[#1E293B] tracking-tight mt-2">
-                    Produk & Perlengkapan Kerja
+                    Katalog Produk & Perlengkapan Kerja
                 </h2>
-                <p class="text-sm text-slate-500 mt-1">
-                    Pilih produk yang Anda butuhkan, tentukan jumlah, dan langsung checkout dalam satu langkah mudah.
+                <p class="text-sm text-slate-500 mt-1 max-w-2xl">
+                    Penyedia resmi perlengkapan industri langsung dari produsen di Surabaya. Tentukan jumlah pesanan dan pesan langsung via WhatsApp.
                 </p>
             </div>
 
             <!-- Instant Search Input (Vanilla JS) -->
             <div class="relative w-full md:w-72">
-                <input type="text" id="product-search-input" placeholder="Cari nama produk..." 
+                <input type="text" id="product-search-input" placeholder="Cari nama produk pabrik..." 
                     class="w-full pl-10 pr-4 py-2.5 rounded-2xl border border-slate-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-[#FF807F] shadow-sm">
                 <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             </div>
@@ -243,19 +242,25 @@
                         </div>
                     {% endif %}
 
-                    <!-- Badge Foto POV -->
+                    <!-- Badge Foto POV (Top Left) -->
                     {% with extra_count=product.gallery_images.count %}
                     {% if extra_count > 0 %}
-                    <span class="absolute top-3 left-3 px-2.5 py-1 rounded-xl bg-slate-900/70 backdrop-blur-md text-white text-[11px] font-semibold flex items-center gap-1.5 shadow-sm border border-white/10 z-10">
+                    <span class="absolute top-3.5 left-3.5 px-2.5 py-1 rounded-xl bg-slate-900/70 backdrop-blur-md text-white text-[11px] font-semibold flex items-center gap-1.5 shadow-sm border border-white/10 z-10">
                         <svg class="w-3.5 h-3.5 text-[#FF807F]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                         <span>{{ extra_count|add:1 }} POV</span>
                     </span>
                     {% endif %}
                     {% endwith %}
 
-                    <!-- Unit Badge -->
-                    <div class="absolute top-3.5 right-3.5 bg-white/90 backdrop-blur-sm text-slate-800 text-xs font-extrabold px-3 py-1 rounded-full shadow-sm border border-slate-200/50">
+                    <!-- Unit Badge (Top Right) -->
+                    <div class="absolute top-3.5 right-3.5 bg-white/95 backdrop-blur-sm text-slate-800 text-xs font-extrabold px-3 py-1 rounded-full shadow-sm border border-slate-200/50">
                         Per {{ product.unit }}
+                    </div>
+
+                    <!-- Min Order Badge (Bottom Left) -->
+                    <div class="absolute bottom-3 left-3 bg-[#1E293B]/85 backdrop-blur-sm text-white text-[11px] font-bold px-2.5 py-1 rounded-xl border border-white/10 shadow-sm flex items-center gap-1.5 z-10">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                        <span>Min. Order: {{ product.min_order }} {{ product.unit }}</span>
                     </div>
                 </div>
 
@@ -270,11 +275,11 @@
                         </p>
                     </div>
 
-                    <!-- Price & Add to Cart Action -->
+                    <!-- Price & WhatsApp Direct Action -->
                     <div class="pt-6 mt-4 border-t border-slate-100">
                         <div class="flex items-baseline justify-between mb-4">
                             <div>
-                                <span class="text-xs text-slate-400 block font-medium">Harga Grosir:</span>
+                                <span class="text-xs text-slate-400 block font-medium">Harga Grosir Pabrik:</span>
                                 <span class="text-xl font-extrabold text-[#1E293B]">
                                     {{ product.formatted_price }}
                                 </span>
@@ -286,7 +291,11 @@
                                     onclick="openProductQuickView(this)"
                                     data-product-name="{{ product.name }}"
                                     data-product-price="{{ product.formatted_price }}"
+                                    data-product-raw-price="{{ product.price|floatformat:0 }}"
                                     data-product-unit="{{ product.unit }}"
+                                    data-product-min="{{ product.min_order }}"
+                                    data-product-step="{{ product.step_order }}"
+                                    data-product-is-machine="{% if product.unit == 'unit' or 'mesin' in product.name|lower %}true{% else %}false{% endif %}"
                                     data-product-desc="{{ product.description|default:'Produk berkualitas standar industri dari CV. Setia Makmur Surabaya.'|escapejs }}"
                                     data-product-id="{{ product.id }}"
                                     data-product-images='[{% for img in product.all_images %}"{{ img.url }}"{% if not forloop.last %},{% endif %}{% endfor %}]'
@@ -296,24 +305,50 @@
                             </button>
                         </div>
 
-                        <!-- Add to Cart Form with Quantity Stepper -->
-                        <form action="{% url 'cart_add' product.id %}" method="POST" class="add-to-cart-form flex items-center gap-2">
-                            {% csrf_token %}
-                            <input type="hidden" name="next" value="{% url 'home' %}#products">
-                            
-                            <!-- Quantity Controls (Vanilla JS) -->
-                            <div class="flex items-center border border-slate-200 rounded-xl bg-slate-50 overflow-hidden w-28">
-                                <button type="button" class="btn-qty-minus px-2.5 py-2 text-slate-600 hover:bg-slate-200 text-sm font-bold transition select-none">-</button>
-                                <input type="number" name="quantity" value="1" min="1" class="qty-input w-full text-center bg-transparent border-0 text-sm font-bold text-slate-800 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
-                                <button type="button" class="btn-qty-plus px-2.5 py-2 text-slate-600 hover:bg-slate-200 text-sm font-bold transition select-none">+</button>
+                        <!-- Stepper & Direct WhatsApp Order Action -->
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between text-[11px] text-slate-500 font-medium">
+                                <span>Kuantitas:</span>
+                                <span class="text-slate-400">Kelipatan {{ product.step_order }} {{ product.unit }}</span>
                             </div>
 
-                            <!-- Submit Button -->
-                            <button type="submit" class="flex-1 py-2.5 px-3 rounded-xl bg-[#FF807F] hover:bg-[#f26e6d] text-white text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-sm hover:shadow group/btn">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
-                                <span>Tambah ke Keranjang</span>
-                            </button>
-                        </form>
+                            <div class="flex items-center gap-2">
+                                <!-- Stepper Input -->
+                                <div class="flex items-center border border-slate-200 rounded-xl bg-slate-50 overflow-hidden w-28 flex-shrink-0">
+                                    <button type="button" 
+                                            onclick="adjustCardQty('{{ product.id }}', -{{ product.step_order }}, {{ product.min_order }})" 
+                                            class="w-8 h-10 flex items-center justify-center text-slate-600 hover:bg-slate-200 text-sm font-bold transition select-none">-</button>
+                                    <input type="number" 
+                                           id="card-qty-{{ product.id }}" 
+                                           value="{{ product.min_order }}" 
+                                           min="{{ product.min_order }}" 
+                                           step="{{ product.step_order }}"
+                                           onchange="validateCardQty('{{ product.id }}', {{ product.min_order }}, {{ product.step_order }})"
+                                           class="w-full text-center bg-transparent border-0 text-xs font-bold text-slate-800 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                                    <button type="button" 
+                                            onclick="adjustCardQty('{{ product.id }}', {{ product.step_order }}, {{ product.min_order }})" 
+                                            class="w-8 h-10 flex items-center justify-center text-slate-600 hover:bg-slate-200 text-sm font-bold transition select-none">+</button>
+                                </div>
+
+                                <!-- WhatsApp Buttons (WA 1 & WA 2) -->
+                                <div class="flex-1 flex items-center gap-1.5">
+                                    <button type="button" 
+                                            onclick="orderCardViaWhatsApp('{{ product.id }}', 1)" 
+                                            class="flex-1 h-10 px-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold transition flex items-center justify-center gap-1 shadow-sm shadow-emerald-600/20 hover:shadow-md transform hover:-translate-y-0.5"
+                                            title="Pesan via WhatsApp Sales 1 (Utama)">
+                                        <svg class="w-3.5 h-3.5 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                                        <span class="truncate">Pesan WA 1</span>
+                                    </button>
+                                    <button type="button" 
+                                            onclick="orderCardViaWhatsApp('{{ product.id }}', 2)" 
+                                            class="h-10 px-2.5 rounded-xl bg-slate-100 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 hover:border-emerald-300 border border-slate-200 text-[11px] font-bold transition flex items-center justify-center gap-1"
+                                            title="Pesan via WhatsApp Sales 2 (Alternatif)">
+                                        <span>WA 2</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -332,11 +367,11 @@
             <div>
                 <h3 class="text-lg font-bold text-slate-800">Produk tidak ditemukan</h3>
                 <p class="text-xs sm:text-sm text-slate-500 max-w-md mx-auto mt-1 leading-relaxed">
-                    Butuh spesifikasi khusus? Hubungi Admin via WhatsApp
+                    Butuh spesifikasi khusus atau penawaran pesanan jumlah besar? Hubungi Admin via WhatsApp.
                 </p>
             </div>
             <div>
-                <a href="https://wa.me/{{ company_profile.clean_whatsapp|default:'6281330780729' }}?text=Halo%20CV.%20Setia%20Makmur%20Surabaya,%20saya%20mencari%20produk%20spesifikasi%20khusus" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm shadow-md transition transform hover:-translate-y-0.5">
+                <a href="https://wa.me/{{ company_profile.wa_url_1|default:'6281330780729' }}?text=Halo%20CV.%20Setia%20Makmur%20Surabaya,%20saya%20mencari%20produk%20spesifikasi%20khusus" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm shadow-md transition transform hover:-translate-y-0.5">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
                     <span>Hubungi Admin via WhatsApp</span>
                 </a>
@@ -356,10 +391,10 @@
                     Hubungi Kami
                 </span>
                 <h2 class="text-3xl sm:text-4xl font-extrabold text-[#1E293B] tracking-tight">
-                    Konsultasi & Pemesanan Skala Besar
+                    Konsultasi & Pemesanan Pabrik Skala Besar
                 </h2>
                 <p class="text-slate-600 text-sm leading-relaxed">
-                    Butuh penawaran khusus atau pengiriman rutin tonase besar untuk pabrik Anda? Tim kami siap berdiskusi langsung via WhatsApp maupun telepon kantor.
+                    Butuh penawaran kontrak rutin tonase besar untuk pabrik Anda? Tim kami siap berdiskusi langsung via WhatsApp maupun telepon kantor selama jam kerja.
                 </p>
 
                 <div class="space-y-4 pt-2">
@@ -370,6 +405,16 @@
                         <div>
                             <span class="text-xs text-slate-400 font-semibold block">Alamat Kantor & Gudang:</span>
                             <span class="text-sm font-bold text-slate-800">{{ company_profile.address|default:"Jln. Wisma Kedung Asem Indah J-30 Surabaya" }}</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                        <div class="w-10 h-10 rounded-xl bg-[#8080FF]/20 text-[#8080FF] flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <div>
+                            <span class="text-xs text-slate-400 font-semibold block">Jam Operasional:</span>
+                            <span class="text-sm font-bold text-slate-800">{{ company_profile.opening_hours|default:"Senin - Sabtu: 08.00 - 17.00 WIB" }}</span>
                         </div>
                     </div>
 
@@ -391,7 +436,16 @@
                         </div>
                         <div>
                             <span class="text-xs text-slate-400 font-semibold block">WhatsApp Pemesanan:</span>
-                            <span class="text-sm font-bold text-slate-800">{{ company_profile.phone_whatsapp|default:"081-330780729 / 082 232377866" }}</span>
+                            <div class="space-y-1 mt-0.5">
+                                <a href="https://wa.me/{{ company_profile.wa_url_1|default:'6281330780729' }}?text=Halo%20CV.%20Setia%20Makmur%20Surabaya,%20saya%20ingin%20berkonsultasi%20mengenai%20pemesanan%20produk%20pabrik" target="_blank" class="block text-xs font-bold text-emerald-600 hover:underline">
+                                    WA 1: {{ company_profile.phone_whatsapp_1|default:"081-330780729" }} (Utama)
+                                </a>
+                                {% if company_profile.phone_whatsapp_2 %}
+                                <a href="https://wa.me/{{ company_profile.wa_url_2|default:'6282232377866' }}?text=Halo%20CV.%20Setia%20Makmur%20Surabaya,%20saya%20ingin%20berkonsultasi%20mengenai%20pemesanan%20produk%20pabrik" target="_blank" class="block text-xs font-semibold text-slate-700 hover:text-emerald-600 hover:underline">
+                                    WA 2: {{ company_profile.phone_whatsapp_2 }} (Alternatif)
+                                </a>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -404,14 +458,14 @@
                 <div class="relative z-10 space-y-6">
                     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-white">
                         <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                        Kemudahan Pembayaran Transfer
+                        Kemudahan Pembayaran Transfer Resmi
                     </div>
 
                     <h3 class="text-2xl sm:text-3xl font-extrabold tracking-tight">
                         Didukung Transfer Rekening Resmi Perusahaan
                     </h3>
                     <p class="text-sm text-slate-300 leading-relaxed">
-                        Kami menerima pembayaran melalui beberapa rekening bank resmi demi kenyamanan dan keamanan transaksi bisnis Anda.
+                        Kami menerima pembayaran melalui beberapa rekening bank resmi demi kenyamanan dan keamanan transaksi bisnis pengadaan industri Anda.
                     </p>
 
                     <!-- Bank cards preview -->
@@ -423,14 +477,20 @@
                             <span class="text-[11px] text-slate-400 block mt-0.5">a.n. {{ bank.account_holder }}</span>
                         </div>
                         {% empty %}
-                        <p class="text-xs text-slate-400">Hubungi admin untuk rekening pembayaran.</p>
+                        <p class="text-xs text-slate-400">Hubungi admin untuk rekening pembayaran resmi.</p>
                         {% endfor %}
                     </div>
 
-                    <div class="pt-4">
-                        <a href="{% url 'cart_detail' %}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#FF807F] hover:bg-[#f26e6d] text-white font-bold text-sm shadow-md transition">
-                            <span>Periksa Keranjang & Checkout</span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    <div class="pt-4 flex flex-wrap gap-3">
+                        <a href="https://wa.me/{{ company_profile.wa_url_1|default:'6281330780729' }}?text=Halo%20CV.%20Setia%20Makmur%20Surabaya,%20saya%20ingin%20berkonsultasi%20mengenai%20pemesanan%20partai%20besar%20dan%20pembayaran%20transfer" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm shadow-md transition transform hover:-translate-y-0.5" title="Hubungi WhatsApp Sales 1 (Utama)">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                            <span>Konsultasi WA 1 (Utama)</span>
+                        </a>
+                        <a href="https://wa.me/{{ company_profile.wa_url_2|default:'6282232377866' }}?text=Halo%20CV.%20Setia%20Makmur%20Surabaya,%20saya%20ingin%20berkonsultasi%20mengenai%20pemesanan%20partai%20besar%20dan%20pembayaran%20transfer" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/20 transition" title="Hubungi WhatsApp Sales 2 (Alternatif)">
+                            <span>Hubungi WA 2 (Alternatif)</span>
+                        </a>
+                        <a href="#products" class="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-slate-300 hover:text-white font-bold text-sm transition">
+                            <span>Lihat Katalog Produk Pabrik</span>
                         </a>
                     </div>
                 </div>
@@ -473,7 +533,7 @@
                     </div>
                 </div>
 
-                <!-- Sisi Kanan: Detail & Aksi Beli (5 Col) -->
+                <!-- Sisi Kanan: Detail & Aksi B2B WhatsApp Order (5 Col) -->
                 <div class="md:col-span-5 p-6 sm:p-8 flex flex-col justify-between">
                     <div>
                         <span class="inline-block px-2.5 py-1 rounded-full text-xs font-bold bg-[#FF807F]/15 text-[#FF807F] mb-3">
@@ -488,34 +548,63 @@
                             <span id="qv-product-unit" class="text-xs font-semibold text-slate-400">/ satuan</span>
                         </div>
 
-                        <div class="mt-6 border-t border-slate-100 pt-4">
+                        <!-- Min Order & Kelipatan Indicator -->
+                        <div class="mt-3 text-xs text-slate-600 font-medium" id="qv-min-order-info">
+                            Min. Order: <strong>1 unit</strong> (Kelipatan 1)
+                        </div>
+
+                        <!-- Estimated Value Box (Standard products) -->
+                        <div class="mt-3 p-3 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-between" id="qv-estimate-container">
+                            <span class="text-xs text-slate-500 font-medium">Estimasi Nilai:</span>
+                            <span class="text-base font-extrabold text-emerald-600" id="qv-total-estimate">Rp 0</span>
+                        </div>
+
+                        <div class="mt-4 border-t border-slate-100 pt-4">
                             <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Deskripsi Produk</h4>
-                            <p id="qv-product-desc" class="text-sm text-slate-600 leading-relaxed max-h-48 overflow-y-auto pr-1">
+                            <p id="qv-product-desc" class="text-sm text-slate-600 leading-relaxed max-h-36 overflow-y-auto pr-1">
                                 Deskripsi produk...
                             </p>
                         </div>
                     </div>
 
-                    <!-- Form Tambah ke Keranjang Langsung dari Modal -->
-                    <div class="mt-8 border-t border-slate-100 pt-5">
-                        <form id="qv-add-to-cart-form" method="POST" action="{% url 'cart_add' 1 %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="next" value="{% url 'home' %}#products">
+                    <!-- Direct WhatsApp Order Action Form from Modal -->
+                    <div class="mt-6 border-t border-slate-100 pt-5 space-y-3">
+                        <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+                            <span>Jumlah Pesanan:</span>
+                            <span id="qv-step-info" class="text-[11px] text-slate-400">Kelipatan 1</span>
+                        </div>
+
+                        <div class="space-y-3">
                             <div class="flex items-center gap-3">
                                 <!-- Stepper Jumlah -->
                                 <div class="flex items-center border border-slate-200 rounded-xl bg-slate-50 p-1">
-                                    <button type="button" onclick="adjustQuickViewQty(-1)" class="w-8 h-8 rounded-lg bg-white shadow-sm flex items-center justify-center font-bold text-slate-600 hover:bg-slate-100 transition">-</button>
-                                    <input type="number" id="qv-quantity" name="quantity" value="1" min="1" class="w-12 text-center bg-transparent text-sm font-bold text-slate-800 focus:outline-none">
-                                    <button type="button" onclick="adjustQuickViewQty(1)" class="w-8 h-8 rounded-lg bg-white shadow-sm flex items-center justify-center font-bold text-slate-600 hover:bg-slate-100 transition">+</button>
+                                    <button type="button" onclick="adjustQuickViewQty(-1)" class="w-8 h-8 rounded-lg bg-white shadow-sm flex items-center justify-center font-bold text-slate-600 hover:bg-slate-100 transition select-none">-</button>
+                                    <input type="number" id="qv-quantity" value="1" min="1" oninput="handleQuickViewQtyInput()" class="w-14 text-center bg-transparent text-sm font-bold text-slate-800 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                                    <button type="button" onclick="adjustQuickViewQty(1)" class="w-8 h-8 rounded-lg bg-white shadow-sm flex items-center justify-center font-bold text-slate-600 hover:bg-slate-100 transition select-none">+</button>
                                 </div>
+                                <span class="text-xs text-slate-400 font-medium">Pilih kontak sales tujuan pesanan:</span>
+                            </div>
 
-                                <!-- Tombol Submit -->
-                                <button type="submit" class="flex-1 py-3 px-4 rounded-xl bg-[#8080FF] hover:bg-[#6e6ef2] text-white font-bold text-sm shadow-md shadow-[#8080FF]/30 transition flex items-center justify-center gap-2">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
-                                    <span>Tambah ke Keranjang</span>
+                            <!-- Dual WhatsApp Action Buttons -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                                <button type="button" 
+                                        id="qv-btn-whatsapp-1" 
+                                        onclick="submitQuickViewWhatsAppOrder(1)" 
+                                        class="py-3 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md shadow-emerald-600/25 transition flex items-center justify-center gap-1.5 transform hover:-translate-y-0.5"
+                                        title="Kirim ke WhatsApp 1 (Utama)">
+                                    <svg class="w-4 h-4 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                                    <span id="qv-whatsapp-btn-text-1">Kirim ke WhatsApp 1 (Utama)</span>
+                                </button>
+                                <button type="button" 
+                                        id="qv-btn-whatsapp-2" 
+                                        onclick="submitQuickViewWhatsAppOrder(2)" 
+                                        class="py-3 px-3 rounded-xl bg-slate-100 hover:bg-emerald-50 text-slate-800 hover:text-emerald-700 font-bold text-xs border border-slate-200 hover:border-emerald-300 transition flex items-center justify-center gap-1.5"
+                                        title="Kirim ke WhatsApp 2 (Alternatif)">
+                                    <svg class="w-4 h-4 text-emerald-600 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                                    <span id="qv-whatsapp-btn-text-2">Kirim ke WhatsApp 2 (Alternatif)</span>
                                 </button>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -527,22 +616,77 @@
 
 {% block extra_js %}
 <script>
-    // Product Catalog dataset for instant dual-mode search
+    // Product Catalog dataset for instant dual-mode search & WhatsApp orders
     const productsCatalog = [
         {% for product in products %}
         {
             id: "{{ product.id }}",
             name: "{{ product.name|escapejs }}",
             nameLower: "{{ product.name|lower|escapejs }}",
-            descLower: "{{ product.description|lower|escapejs }}",
+            descLower: "{{ product.description|lower|default:''|escapejs }}",
             formattedPrice: "{{ product.formatted_price }}",
+            rawPrice: {{ product.price|floatformat:0|default:0 }},
             unit: "{{ product.unit|escapejs }}",
+            minOrder: {{ product.min_order|default:1 }},
+            stepOrder: {{ product.step_order|default:1 }},
+            isMachine: {% if product.unit == 'unit' or 'mesin' in product.name|lower %}true{% else %}false{% endif %},
             imageUrl: "{% if product.image %}{{ product.image.url }}{% endif %}",
             initial: "{{ product.name|slice:':2'|upper|escapejs }}"
         }{% if not forloop.last %},{% endif %}
         {% endfor %}
     ];
 
+    const WA_PHONE_1 = "{{ company_profile.wa_url_1|default:'6281330780729' }}";
+    const WA_PHONE_2 = "{{ company_profile.wa_url_2|default:'6282232377866' }}";
+
+    // Build dynamic WhatsApp order URL (Pure clean digits only)
+    function buildWhatsAppUrl(productName, quantity, unit, price, isMachine, salesTarget = 1) {
+        let message = '';
+        if (isMachine || (unit && unit.toLowerCase() === 'unit') || productName.toLowerCase().includes('mesin')) {
+            message = `Halo CV. Setia Makmur Surabaya, saya tertarik dengan ${productName}.\nSaya ingin berkonsultasi mengenai spesifikasi teknis, jadwal survei ke pabrik, dan sistem DP/pemesanan. Terima kasih.`;
+        } else {
+            const totalVal = Math.round(quantity * price).toLocaleString('id-ID');
+            message = `Halo CV. Setia Makmur Surabaya, saya ingin memesan produk dari website:\n- Produk: ${productName}\n- Jumlah: ${quantity} ${unit}\n- Estimasi Nilai: Rp ${totalVal}\n\nMohon informasi ketersediaan stok, syarat pengiriman ke lokasi kami, dan tata cara pembayaran. Terima kasih.`;
+        }
+        const targetPhone = (salesTarget === 2) ? WA_PHONE_2 : WA_PHONE_1;
+        return `https://wa.me/${targetPhone}?text=${encodeURIComponent(message)}`;
+    }
+
+    // Product Card Stepper & Order Controls
+    function adjustCardQty(productId, delta, minOrder) {
+        const input = document.getElementById('card-qty-' + productId);
+        if (!input) return;
+        let current = parseInt(input.value) || minOrder;
+        current += delta;
+        if (current < minOrder) current = minOrder;
+        input.value = current;
+    }
+
+    function validateCardQty(productId, minOrder, stepOrder) {
+        const input = document.getElementById('card-qty-' + productId);
+        if (!input) return;
+        let current = parseInt(input.value) || minOrder;
+        if (current < minOrder) current = minOrder;
+        if (stepOrder > 1) {
+            const diff = current - minOrder;
+            const rem = diff % stepOrder;
+            if (rem !== 0) {
+                current = current + (stepOrder - rem);
+            }
+        }
+        input.value = current;
+    }
+
+    function orderCardViaWhatsApp(productId, salesTarget = 1) {
+        const item = productsCatalog.find(p => p.id == productId);
+        if (!item) return;
+        const input = document.getElementById('card-qty-' + productId);
+        const qty = input ? (parseInt(input.value) || item.minOrder) : item.minOrder;
+        const url = buildWhatsAppUrl(item.name, qty, item.unit, item.rawPrice, item.isMachine, salesTarget);
+        window.open(url, '_blank', 'noopener,noreferrer');
+    }
+
+    // Live Instant Search Elements
     const liveSearchInput = document.getElementById('live-search-input');
     const catalogSearchInput = document.getElementById('product-search-input');
     const btnClearSearch = document.getElementById('btn-clear-search');
@@ -739,39 +883,23 @@
         }
     });
 
-    // Quantity Stepper Controls (Vanilla JS)
-    document.querySelectorAll('.add-to-cart-form').forEach(form => {
-        const btnMinus = form.querySelector('.btn-qty-minus');
-        const btnPlus = form.querySelector('.btn-qty-plus');
-        const inputQty = form.querySelector('.qty-input');
-
-        if (btnMinus && btnPlus && inputQty) {
-            btnMinus.addEventListener('click', () => {
-                let currentVal = parseInt(inputQty.value) || 1;
-                if (currentVal > 1) {
-                    inputQty.value = currentVal - 1;
-                }
-            });
-
-            btnPlus.addEventListener('click', () => {
-                let currentVal = parseInt(inputQty.value) || 1;
-                inputQty.value = currentVal + 1;
-            });
-        }
-    });
-
     // ==========================================
     // Multi-Image POV Quick View Modal Logic
     // ==========================================
     let currentQuickViewImages = [];
     let activeImageIndex = 0;
+    let qvCurrentProduct = null;
 
     function openProductQuickView(buttonEl) {
         const name = buttonEl.getAttribute('data-product-name');
         const price = buttonEl.getAttribute('data-product-price');
+        const rawPrice = parseFloat(buttonEl.getAttribute('data-product-raw-price')) || 0;
         const unit = buttonEl.getAttribute('data-product-unit');
         const desc = buttonEl.getAttribute('data-product-desc');
         const productId = buttonEl.getAttribute('data-product-id');
+        const minOrder = parseInt(buttonEl.getAttribute('data-product-min')) || 1;
+        const stepOrder = parseInt(buttonEl.getAttribute('data-product-step')) || 1;
+        const isMachine = buttonEl.getAttribute('data-product-is-machine') === 'true';
         const imagesRaw = buttonEl.getAttribute('data-product-images');
 
         try {
@@ -785,18 +913,31 @@
             currentQuickViewImages = ['https://placehold.co/600x600/F8FAFC/1E293B?text=Produk+CV+SMS'];
         }
 
+        qvCurrentProduct = {
+            id: productId,
+            name: name,
+            priceStr: price,
+            rawPrice: rawPrice,
+            unit: unit,
+            minOrder: minOrder,
+            stepOrder: stepOrder,
+            isMachine: isMachine
+        };
+
         // Isi Elemen Teks Modal
         document.getElementById('qv-product-name').textContent = name;
         document.getElementById('qv-product-price').textContent = price;
         document.getElementById('qv-product-unit').textContent = '/ ' + unit;
         document.getElementById('qv-product-desc').textContent = desc || 'Tidak ada deskripsi rinci.';
+        document.getElementById('qv-min-order-info').innerHTML = `Min. Order: <strong>${minOrder} ${unit}</strong> (Kelipatan ${stepOrder} ${unit})`;
+        document.getElementById('qv-step-info').textContent = `Kelipatan ${stepOrder} ${unit}`;
 
-        // Update Action URL Form Cart
-        const cartForm = document.getElementById('qv-add-to-cart-form');
-        if (cartForm) {
-            cartForm.action = cartForm.action.replace(/\/cart\/add\/\d+\//, `/cart/add/${productId}/`);
-        }
-        document.getElementById('qv-quantity').value = 1;
+        const qtyInput = document.getElementById('qv-quantity');
+        qtyInput.value = minOrder;
+        qtyInput.min = minOrder;
+        qtyInput.step = stepOrder;
+
+        updateQuickViewEstimate();
 
         // Render Thumbnail POV
         renderThumbnails();
@@ -810,6 +951,56 @@
             modal.classList.remove('hidden');
         }
         document.body.classList.add('overflow-hidden');
+    }
+
+    function adjustQuickViewQty(direction) {
+        if (!qvCurrentProduct) return;
+        const input = document.getElementById('qv-quantity');
+        if (!input) return;
+        let val = parseInt(input.value) || qvCurrentProduct.minOrder;
+        val += direction * qvCurrentProduct.stepOrder;
+        if (val < qvCurrentProduct.minOrder) val = qvCurrentProduct.minOrder;
+        input.value = val;
+        updateQuickViewEstimate();
+    }
+
+    function handleQuickViewQtyInput() {
+        if (!qvCurrentProduct) return;
+        const input = document.getElementById('qv-quantity');
+        if (!input) return;
+        let val = parseInt(input.value) || qvCurrentProduct.minOrder;
+        if (val < qvCurrentProduct.minOrder) val = qvCurrentProduct.minOrder;
+        updateQuickViewEstimate();
+    }
+
+    function updateQuickViewEstimate() {
+        if (!qvCurrentProduct) return;
+        const input = document.getElementById('qv-quantity');
+        const qty = input ? (parseInt(input.value) || qvCurrentProduct.minOrder) : qvCurrentProduct.minOrder;
+        const estimateEl = document.getElementById('qv-total-estimate');
+        const estimateContainer = document.getElementById('qv-estimate-container');
+        const btnText1 = document.getElementById('qv-whatsapp-btn-text-1');
+        const btnText2 = document.getElementById('qv-whatsapp-btn-text-2');
+
+        if (qvCurrentProduct.isMachine) {
+            if (estimateContainer) estimateContainer.classList.add('hidden');
+            if (btnText1) btnText1.textContent = 'Konsultasi Mesin via WA 1';
+            if (btnText2) btnText2.textContent = 'Konsultasi Mesin via WA 2';
+        } else {
+            if (estimateContainer) estimateContainer.classList.remove('hidden');
+            const total = Math.round(qty * qvCurrentProduct.rawPrice);
+            if (estimateEl) estimateEl.textContent = 'Rp ' + total.toLocaleString('id-ID');
+            if (btnText1) btnText1.textContent = 'Kirim ke WhatsApp 1 (Utama)';
+            if (btnText2) btnText2.textContent = 'Kirim ke WhatsApp 2 (Alternatif)';
+        }
+    }
+
+    function submitQuickViewWhatsAppOrder(salesTarget = 1) {
+        if (!qvCurrentProduct) return;
+        const input = document.getElementById('qv-quantity');
+        const qty = input ? (parseInt(input.value) || qvCurrentProduct.minOrder) : qvCurrentProduct.minOrder;
+        const url = buildWhatsAppUrl(qvCurrentProduct.name, qty, qvCurrentProduct.unit, qvCurrentProduct.rawPrice, qvCurrentProduct.isMachine, salesTarget);
+        window.open(url, '_blank', 'noopener,noreferrer');
     }
 
     function renderThumbnails() {
@@ -869,15 +1060,6 @@
         }
     }
 
-    function adjustQuickViewQty(delta) {
-        const input = document.getElementById('qv-quantity');
-        if (!input) return;
-        let val = parseInt(input.value) || 1;
-        val += delta;
-        if (val < 1) val = 1;
-        input.value = val;
-    }
-
     function closeProductQuickView() {
         const modal = document.getElementById('product-gallery-modal');
         if (modal) {
@@ -887,4 +1069,3 @@
     }
 </script>
 {% endblock %}
-

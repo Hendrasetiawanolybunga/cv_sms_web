@@ -1,7 +1,7 @@
 {% extends 'core/dashboard/base_dashboard.html' %}
 {% load static %}
 
-{% block page_title %}Ringkasan Dashboard{% endblock %}
+{% block page_title %}Ringkasan Dashboard Pabrik{% endblock %}
 
 {% block content %}
 <div class="space-y-8">
@@ -12,25 +12,25 @@
         <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div>
                 <span class="inline-block px-3 py-1 rounded-full bg-[#FF807F]/20 text-[#FF807F] text-xs font-extrabold uppercase tracking-wider mb-2">
-                    CV. Setia Makmur Surabaya
+                    Katalog B2B &bull; CV. Setia Makmur Surabaya
                 </span>
                 <h1 class="text-2xl sm:text-3xl font-black tracking-tight">
                     Selamat Datang, {{ request.user.get_full_name|default:request.user.username }}!
                 </h1>
-                <p class="text-xs sm:text-sm text-slate-300 mt-1 max-w-xl">
-                    Pantau kinerja penjualan, verifikasi bukti transfer pesanan pelanggan, dan kelola ketersediaan produk pabrik secara langsung.
+                <p class="text-xs sm:text-sm text-slate-300 mt-1 max-w-xl leading-relaxed">
+                    Portal operasional internal untuk mengelola katalog produk B2B, spesifikasi minimal order pabrik, galeri foto POV, dan informasi kontak WhatsApp resmi perusahaan.
                 </p>
             </div>
 
             <!-- Quick Action Buttons -->
             <div class="flex items-center gap-3 flex-wrap">
-                <a href="{% url 'dashboard_order_list' %}?status=pending" class="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    <span>{{ pending_orders }} Perlu Diverifikasi</span>
-                </a>
                 <a href="{% url 'dashboard_product_create' %}" class="px-4 py-2.5 rounded-xl bg-[#FF807F] hover:bg-[#f26e6d] text-white font-bold text-xs shadow-md transition flex items-center gap-1.5">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
-                    <span>Tambah Produk</span>
+                    <span>Tambah Produk Baru</span>
+                </a>
+                <a href="{% url 'dashboard_settings' %}" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/20 transition flex items-center gap-1.5">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                    <span>Edit Profil Perusahaan</span>
                 </a>
             </div>
         </div>
@@ -39,74 +39,116 @@
     <!-- Stats 4-Card Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         
-        <!-- Card 1: Total Revenue -->
+        <!-- Card 1: Total Products -->
         <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition">
             <div class="flex items-center justify-between mb-4">
-                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Pendapatan Dikonfirmasi</span>
-                <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">
-                    Rp
-                </div>
-            </div>
-            <h3 class="text-2xl font-black text-slate-800 tracking-tight">{{ formatted_revenue }}</h3>
-            <p class="text-[11px] text-emerald-600 font-semibold mt-1 flex items-center gap-1">
-                <span>✓</span> Berasal dari pesanan berstatus konfirmasi
-            </p>
-        </div>
-
-        <!-- Card 2: Total Orders & Status -->
-        <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition">
-            <div class="flex items-center justify-between mb-4">
-                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Transaksi</span>
-                <div class="w-10 h-10 rounded-xl bg-[#8080FF]/10 text-[#8080FF] flex items-center justify-center">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
-                </div>
-            </div>
-            <h3 class="text-2xl font-black text-slate-800 tracking-tight">{{ total_orders }} <span class="text-xs text-slate-400 font-normal">Pesanan</span></h3>
-            <div class="flex items-center gap-2 mt-2 text-[11px] font-bold">
-                <span class="text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">{{ pending_orders }} Pending</span>
-                <span class="text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">{{ confirmed_orders }} Selesai</span>
-            </div>
-        </div>
-
-        <!-- Card 3: Total Products -->
-        <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition">
-            <div class="flex items-center justify-between mb-4">
-                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Katalog Produk</span>
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Katalog</span>
                 <div class="w-10 h-10 rounded-xl bg-[#FF807F]/10 text-[#FF807F] flex items-center justify-center">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
                 </div>
             </div>
             <h3 class="text-2xl font-black text-slate-800 tracking-tight">{{ total_products }} <span class="text-xs text-slate-400 font-normal">Item</span></h3>
             <p class="text-[11px] text-slate-500 font-medium mt-1">
-                {{ active_products }} produk tayang aktif di toko
+                Katalog produk B2B industri terdaftar
             </p>
         </div>
 
-        <!-- Card 4: Registered Customers -->
+        <!-- Card 2: Active Products -->
         <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition">
             <div class="flex items-center justify-between mb-4">
-                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Pelanggan Terdaftar</span>
-                <div class="w-10 h-10 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center">
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Produk Aktif</span>
+                <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">
+                    ✓
+                </div>
+            </div>
+            <h3 class="text-2xl font-black text-slate-800 tracking-tight">{{ active_products }} <span class="text-xs text-slate-400 font-normal">Aktif</span></h3>
+            <p class="text-[11px] text-emerald-600 font-semibold mt-1">
+                Tayang di katalog website publik
+            </p>
+        </div>
+
+        <!-- Card 3: Gallery Photos -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Foto Galeri POV</span>
+                <div class="w-10 h-10 rounded-xl bg-[#8080FF]/10 text-[#8080FF] flex items-center justify-center">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                </div>
+            </div>
+            <h3 class="text-2xl font-black text-slate-800 tracking-tight">{{ total_gallery_images }} <span class="text-xs text-slate-400 font-normal">Foto</span></h3>
+            <p class="text-[11px] text-slate-500 font-medium mt-1">
+                Sudut pandang interaktif tersimpan
+            </p>
+        </div>
+
+        <!-- Card 4: Staff Users -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Tim Pengelola</span>
+                <div class="w-10 h-10 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
                 </div>
             </div>
-            <h3 class="text-2xl font-black text-slate-800 tracking-tight">{{ total_customers }} <span class="text-xs text-slate-400 font-normal">Akun</span></h3>
+            <h3 class="text-2xl font-black text-slate-800 tracking-tight">{{ total_staff }} <span class="text-xs text-slate-400 font-normal">Akun</span></h3>
             <p class="text-[11px] text-slate-500 font-medium mt-1">
-                Pelanggan dengan database mandiri
+                Staf admin internal pabrik
             </p>
         </div>
 
     </div>
 
-    <!-- Recent Orders Table -->
+    <!-- Company Profile Summary Card -->
+    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-sm space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
+            <div>
+                <span class="text-[11px] font-extrabold uppercase tracking-widest text-[#8080FF] bg-[#8080FF]/10 px-2.5 py-1 rounded-full">
+                    Identitas & Operasional Pabrik
+                </span>
+                <h2 class="text-lg font-bold text-[#1E293B] mt-2">{{ profile.hero_title|default:"CV. Setia Makmur Surabaya" }}</h2>
+                <p class="text-xs text-slate-500 mt-0.5">Informasi kontak pabrik yang ditampilkan kepada calon pembeli di seluruh Indonesia.</p>
+            </div>
+            <a href="{% url 'dashboard_settings' %}" class="px-4 py-2 rounded-xl border border-slate-200 hover:border-[#8080FF] hover:text-[#8080FF] text-xs font-bold text-slate-700 transition flex items-center gap-1.5 self-start sm:self-auto">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                <span>Kelola Profil</span>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-xs">
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-1">
+                <span class="text-slate-400 font-semibold block uppercase tracking-wider text-[10px]">Alamat Gudang / Kantor:</span>
+                <span class="font-bold text-slate-800 block text-xs leading-relaxed">{{ profile.address|default:"Jln. Wisma Kedung Asem Indah J-30 Surabaya" }}</span>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-1">
+                <span class="text-slate-400 font-semibold block uppercase tracking-wider text-[10px]">Jam Operasional:</span>
+                <span class="font-bold text-slate-800 block text-xs">{{ profile.opening_hours|default:"Senin - Sabtu: 08.00 - 17.00 WIB" }}</span>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-1">
+                <span class="text-slate-400 font-semibold block uppercase tracking-wider text-[10px]">WhatsApp Direct Order:</span>
+                <span class="font-bold text-emerald-600 block text-xs">WA 1: {{ profile.phone_whatsapp_1|default:"081-330780729" }}</span>
+                {% if profile.phone_whatsapp_2 %}
+                <span class="font-bold text-emerald-500 block text-xs">WA 2: {{ profile.phone_whatsapp_2 }}</span>
+                {% endif %}
+            </div>
+
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-1">
+                <span class="text-slate-400 font-semibold block uppercase tracking-wider text-[10px]">Telepon Kantor & Email:</span>
+                <span class="font-bold text-slate-800 block text-xs">{{ profile.phone_office|default:"031-8793055" }}</span>
+                <span class="text-slate-500 block text-[11px] truncate">{{ profile.email|default:"setia.makmur60@yahoo.com" }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Products Table -->
     <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-sm space-y-6">
         <div class="flex items-center justify-between">
             <div>
-                <h2 class="text-lg font-bold text-[#1E293B]">Transaksi Pesanan Terbaru</h2>
-                <p class="text-xs text-slate-500 mt-0.5">Daftar transaksi masuk yang memerlukan pemantauan dan validasi bukti bayar.</p>
+                <h2 class="text-lg font-bold text-[#1E293B]">Katalog Produk Terbaru</h2>
+                <p class="text-xs text-slate-500 mt-0.5">Daftar produk industri yang siap menerima pesanan langsung via WhatsApp.</p>
             </div>
-            <a href="{% url 'dashboard_order_list' %}" class="text-xs font-bold text-[#8080FF] hover:underline flex items-center gap-1">
-                <span>Lihat Semua Pesanan</span>
+            <a href="{% url 'dashboard_product_list' %}" class="text-xs font-bold text-[#8080FF] hover:underline flex items-center gap-1">
+                <span>Lihat Semua Produk</span>
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
             </a>
         </div>
@@ -115,60 +157,63 @@
             <table class="w-full text-left text-xs">
                 <thead>
                     <tr class="border-b border-slate-100 text-slate-400 font-bold uppercase tracking-wider">
-                        <th class="pb-3 pl-2">Kode Pesanan</th>
-                        <th class="pb-3">Tanggal</th>
-                        <th class="pb-3">Penerima</th>
-                        <th class="pb-3">Bank Tujuan</th>
-                        <th class="pb-3">Total Transfer</th>
-                        <th class="pb-3">Bukti Transfer</th>
+                        <th class="pb-3 pl-2">Foto</th>
+                        <th class="pb-3">Nama Produk</th>
+                        <th class="pb-3">Harga Grosir</th>
+                        <th class="pb-3">Minimal Order</th>
+                        <th class="pb-3">Kelipatan Order</th>
                         <th class="pb-3">Status</th>
                         <th class="pb-3 pr-2 text-right">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100">
-                    {% for order in recent_orders %}
+                    {% for product in recent_products %}
                     <tr class="hover:bg-slate-50/70 transition">
-                        <td class="py-4 pl-2 font-mono font-bold text-[#1E293B]">
-                            #{{ order.order_code }}
-                        </td>
-                        <td class="py-4 text-slate-500">
-                            {{ order.created_at|date:"d M Y, H:i" }}
+                        <td class="py-4 pl-2">
+                            <div class="w-12 h-12 rounded-xl bg-slate-100 overflow-hidden flex items-center justify-center border border-slate-200">
+                                {% if product.image %}
+                                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover">
+                                {% else %}
+                                    <span class="font-black text-slate-400 text-xs">{{ product.name|slice:":2"|upper }}</span>
+                                {% endif %}
+                            </div>
                         </td>
                         <td class="py-4">
-                            <span class="font-bold text-slate-800 block">{{ order.recipient_name }}</span>
-                            <span class="text-slate-400 text-[11px]">{{ order.recipient_phone }}</span>
-                        </td>
-                        <td class="py-4 text-slate-600 font-medium">
-                            {{ order.selected_bank.bank_name }}
+                            <span class="font-bold text-slate-800 block">{{ product.name }}</span>
+                            <span class="text-slate-400 text-[11px] font-mono">slug: {{ product.slug }}</span>
                         </td>
                         <td class="py-4 font-bold text-slate-800">
-                            {{ order.formatted_total }}
+                            {{ product.formatted_price }} <span class="text-slate-400 font-normal">/ {{ product.unit }}</span>
                         </td>
                         <td class="py-4">
-                            {% if order.payment_proof %}
-                            <button type="button" onclick="openDashboardImageModal('{{ order.payment_proof.url }}', 'Bukti Transfer #{{ order.order_code }}')" class="p-1 rounded-lg border border-slate-200 hover:border-[#8080FF] hover:bg-[#8080FF]/10 text-[#8080FF] text-[11px] font-bold flex items-center gap-1 transition">
-                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                                <span>Lihat Struk</span>
-                            </button>
-                            {% else %}
-                            <span class="text-slate-400 italic text-[11px]">Belum upload</span>
-                            {% endif %}
-                        </td>
-                        <td class="py-4">
-                            <span class="px-2.5 py-1 rounded-full text-[11px] font-bold border {{ order.status_badge_class }}">
-                                {{ order.get_status_display }}
+                            <span class="px-2.5 py-1 rounded-lg bg-amber-50 text-amber-700 font-bold text-[11px] border border-amber-200">
+                                Min. {{ product.min_order }} {{ product.unit }}
                             </span>
                         </td>
+                        <td class="py-4 text-slate-600 font-medium">
+                            +{{ product.step_order }} {{ product.unit }}
+                        </td>
+                        <td class="py-4">
+                            {% if product.is_active %}
+                                <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-600 border border-emerald-200">
+                                    Aktif
+                                </span>
+                            {% else %}
+                                <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-slate-100 text-slate-500 border border-slate-200">
+                                    Nonaktif
+                                </span>
+                            {% endif %}
+                        </td>
                         <td class="py-4 pr-2 text-right">
-                            <a href="{% url 'dashboard_order_detail' order.id %}" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-[#8080FF] hover:text-white text-slate-700 font-bold text-[11px] transition inline-flex items-center gap-1">
-                                Periksa &rarr;
+                            <a href="{% url 'dashboard_product_edit' product.id %}" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-[#8080FF] hover:text-white text-slate-700 font-bold text-[11px] transition inline-flex items-center gap-1">
+                                Edit &rarr;
                             </a>
                         </td>
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="8" class="text-center py-8 text-slate-400">
-                            Belum ada pesanan masuk.
+                        <td colspan="7" class="text-center py-8 text-slate-400">
+                            Belum ada produk di katalog.
                         </td>
                     </tr>
                     {% endfor %}
@@ -179,4 +224,3 @@
 
 </div>
 {% endblock %}
-

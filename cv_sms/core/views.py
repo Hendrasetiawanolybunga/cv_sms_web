@@ -1,16 +1,5 @@
 from .views_public import (
     home,
-    cart_detail,
-    cart_add,
-    cart_update,
-    cart_remove,
-    cart_clear,
-    checkout,
-    order_detail,
-    customer_register,
-    customer_login,
-    customer_logout,
-    customer_orders,
 )
 
 from .views_dashboard import (

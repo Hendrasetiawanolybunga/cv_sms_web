@@ -56,38 +56,21 @@ def dashboard_logout(request):
 
 @dashboard_admin_required
 def dashboard_index(request):
-    total_orders = Order.objects.count()
-    pending_orders = Order.objects.filter(status='pending').count()
-    confirmed_orders = Order.objects.filter(status='confirmed').count()
-    rejected_orders = Order.objects.filter(status='rejected').count()
-
-    # Total revenue from confirmed orders
-    total_revenue = Order.objects.filter(status='confirmed').aggregate(
-        total=Sum('total_amount')
-    )['total'] or 0
-
-    try:
-        formatted_revenue = f"Rp {int(total_revenue):,}".replace(",", ".")
-    except Exception:
-        formatted_revenue = f"Rp {total_revenue}"
-
     total_products = Product.objects.count()
     active_products = Product.objects.filter(is_active=True).count()
-    total_customers = Customer.objects.count()
-
-    recent_orders = Order.objects.select_related('customer', 'selected_bank').order_by('-created_at')[:8]
+    total_gallery_images = ProductImage.objects.count()
+    total_staff = User.objects.filter(is_staff=True).count()
+    
+    recent_products = Product.objects.all().order_by('-created_at')[:6]
+    profile = CompanyProfile.objects.first()
 
     return render(request, 'core/dashboard/index.html', {
-        'total_orders': total_orders,
-        'pending_orders': pending_orders,
-        'confirmed_orders': confirmed_orders,
-        'rejected_orders': rejected_orders,
-        'total_revenue': total_revenue,
-        'formatted_revenue': formatted_revenue,
         'total_products': total_products,
         'active_products': active_products,
-        'total_customers': total_customers,
-        'recent_orders': recent_orders,
+        'total_gallery_images': total_gallery_images,
+        'total_staff': total_staff,
+        'recent_products': recent_products,
+        'profile': profile,
     })
 
 
