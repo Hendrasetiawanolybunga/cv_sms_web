@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 
-from core.models import CompanyProfile, BankAccount, Product, Customer, Order, OrderItem
+from core.models import CompanyProfile, BankAccount, Product, ProductImage, Customer, Order, OrderItem
 from core.cart import Cart
 
 
@@ -332,3 +332,50 @@ class DualAuthAndModelsTestCase(TestCase):
         del_resp = client.post(reverse('dashboard_order_delete', args=[walkin_order.id]), follow=True)
         self.assertEqual(del_resp.status_code, 200)
         self.assertFalse(Order.objects.filter(id=walkin_order.id).exists())
+
+    def test_multi_image_pov_gallery(self):
+        """Test gallery model, all_images property, dashboard upload and delete endpoint."""
+        client = Client()
+        client.login(username='staffadmin', password='password123')
+
+        # 1. Test all_images property with cover and gallery images
+        self.product1.image = create_dummy_image()
+        self.product1.save()
+
+        g_img1 = ProductImage.objects.create(
+            product=self.product1,
+            image=create_dummy_image(),
+            caption='Sudut Atas',
+            order=0
+        )
+        g_img2 = ProductImage.objects.create(
+            product=self.product1,
+            image=create_dummy_image(),
+            caption='Detail Serat',
+            order=1
+        )
+
+        all_imgs = self.product1.all_images
+        self.assertEqual(len(all_imgs), 3) # 1 cover + 2 gallery
+        self.assertTrue(all_imgs[0]['is_cover'])
+        self.assertFalse(all_imgs[1]['is_cover'])
+
+        # 2. Test AJAX delete endpoint
+        del_ajax = client.post(
+            reverse('dashboard_product_image_delete', args=[g_img1.id]),
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+        self.assertEqual(del_ajax.status_code, 200)
+        self.assertEqual(del_ajax.json().get('status'), 'success')
+        self.assertFalse(ProductImage.objects.filter(id=g_img1.id).exists())
+
+        # 3. Test standard POST delete endpoint
+        del_post = client.post(reverse('dashboard_product_image_delete', args=[g_img2.id]), follow=True)
+        self.assertEqual(del_post.status_code, 200)
+        self.assertFalse(ProductImage.objects.filter(id=g_img2.id).exists())
+
+        # 4. Test Home page renders quick view modal and button
+        home_resp = client.get(reverse('home'))
+        self.assertEqual(home_resp.status_code, 200)
+        self.assertContains(home_resp, 'id="product-gallery-modal"')
+        self.assertContains(home_resp, 'Lihat Foto POV')

@@ -26,6 +26,8 @@ staticfiles/
 # Media dinamis lokal (pertahankan folder dengan .gitkeep)
 media/products/*
 !media/products/.gitkeep
+!media/products/gallery/
+!media/products/gallery/.gitkeep
 media/payment_proofs/*
 !media/payment_proofs/.gitkeep
 media/company/*

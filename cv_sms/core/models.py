@@ -85,6 +85,33 @@ class Product(models.Model):
         except (ValueError, TypeError):
             return f"Rp {self.price}"
 
+    @property
+    def all_images(self):
+        """Mengembalikan list seluruh URL gambar (foto utama + galeri)"""
+        images = []
+        if self.image:
+            images.append({'url': self.image.url, 'caption': self.name, 'is_cover': True})
+        for img in self.gallery_images.all():
+            if img.image:
+                images.append({'url': img.image.url, 'caption': img.caption or self.name, 'is_cover': False})
+        return images
+
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='gallery_images')
+    image = models.ImageField(upload_to='products/gallery/')
+    caption = models.CharField(max_length=150, blank=True)
+    order = models.PositiveIntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Foto Galeri Produk'
+        verbose_name_plural = 'Foto Galeri Produk'
+        ordering = ['order', 'id']
+
+    def __str__(self):
+        return f"{self.product.name} - Gallery #{self.id}"
+
 
 class Customer(models.Model):
     name = models.CharField(max_length=150)

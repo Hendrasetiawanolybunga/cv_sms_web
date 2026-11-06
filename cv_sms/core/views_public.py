@@ -11,7 +11,7 @@ from .forms import CustomerRegistrationForm, CustomerLoginForm, CheckoutForm
 from .decorators import customer_login_required
 
 def home(request):
-    products = Product.objects.filter(is_active=True).order_by('-created_at')
+    products = Product.objects.filter(is_active=True).prefetch_related('gallery_images').order_by('-created_at')
     banks = BankAccount.objects.filter(is_active=True)
     return render(request, 'core/home.html', {
         'products': products,

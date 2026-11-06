@@ -29,6 +29,7 @@ urlpatterns = [
     path('dashboard/products/<int:product_id>/edit/', views.dashboard_product_edit, name='dashboard_product_edit'),
     path('dashboard/products/<int:product_id>/toggle/', views.dashboard_product_toggle, name='dashboard_product_toggle'),
     path('dashboard/products/<int:product_id>/delete/', views.dashboard_product_delete, name='dashboard_product_delete'),
+    path('dashboard/products/images/<int:pk>/delete/', views.dashboard_product_image_delete, name='dashboard_product_image_delete'),
 
     # Pesanan / Transaksi CRUD
     path('dashboard/orders/', views.dashboard_order_list, name='dashboard_order_list'),

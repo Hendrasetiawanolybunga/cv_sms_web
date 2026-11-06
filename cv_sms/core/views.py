@@ -22,6 +22,7 @@ from .views_dashboard import (
     dashboard_product_edit,
     dashboard_product_toggle,
     dashboard_product_delete,
+    dashboard_product_image_delete,
     dashboard_order_list,
     dashboard_order_detail,
     dashboard_order_status_update,

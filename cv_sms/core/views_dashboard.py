@@ -7,8 +7,9 @@ from django.contrib.auth.models import User
 from django.db.models import Sum, Count, Q
 from django.views.decorators.http import require_POST
 from django.utils import timezone
+from django.http import JsonResponse
 
-from .models import Product, BankAccount, Customer, Order, OrderItem, CompanyProfile
+from .models import Product, ProductImage, BankAccount, Customer, Order, OrderItem, CompanyProfile
 from .forms import (
     ProductForm, CompanyProfileForm, BankAccountForm,
     StaffUserCreateForm, StaffUserEditForm,
@@ -111,6 +112,13 @@ def dashboard_product_create(request):
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
             product = form.save()
+            images = request.FILES.getlist('gallery_images')
+            for idx, img_file in enumerate(images):
+                ProductImage.objects.create(
+                    product=product,
+                    image=img_file,
+                    order=idx
+                )
             messages.success(request, f'Produk "{product.name}" berhasil ditambahkan!')
             return redirect('dashboard_product_list')
     else:
@@ -129,7 +137,15 @@ def dashboard_product_edit(request, product_id):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
-            form.save()
+            product = form.save()
+            images = request.FILES.getlist('gallery_images')
+            start_order = product.gallery_images.count()
+            for idx, img_file in enumerate(images):
+                ProductImage.objects.create(
+                    product=product,
+                    image=img_file,
+                    order=start_order + idx
+                )
             messages.success(request, f'Produk "{product.name}" berhasil diperbarui!')
             return redirect('dashboard_product_list')
     else:
@@ -141,6 +157,20 @@ def dashboard_product_edit(request, product_id):
         'action_title': f'Edit Produk: {product.name}',
         'is_edit': True,
     })
+
+
+@dashboard_admin_required
+@require_POST
+def dashboard_product_image_delete(request, pk):
+    image = get_object_or_404(ProductImage, pk=pk)
+    product_id = image.product.id
+    if image.image:
+        image.image.delete(save=False)  # Hapus file fisik
+    image.delete()
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return JsonResponse({'status': 'success', 'message': 'Foto berhasil dihapus.'})
+    messages.success(request, 'Foto galeri berhasil dihapus.')
+    return redirect('dashboard_product_edit', product_id=product_id)
 
 
 @dashboard_admin_required

@@ -65,7 +65,7 @@
 
             <div>
                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                    Foto Produk
+                    Foto Produk (Cover Utama)
                 </label>
                 {% if is_edit and product.image %}
                     <div class="mb-3 flex items-center gap-3 p-3 bg-slate-50 rounded-2xl border border-slate-200">
@@ -81,6 +81,31 @@
                     <p class="text-xs text-rose-500 mt-1">{{ form.image.errors.0 }}</p>
                 {% endif %}
             </div>
+
+            <!-- Upload Multi-Foto Galeri POV -->
+            <div class="mt-4">
+                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                    Tambah Foto Galeri POV (Bisa Pilih Banyak)
+                </label>
+                <input type="file" name="gallery_images" multiple accept="image/*" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-[#8080FF]/10 file:text-[#8080FF] hover:file:bg-[#8080FF]/20 cursor-pointer">
+                <p class="text-xs text-slate-400 mt-1">Format: JPG, PNG, WEBP. Maks 5MB per file.</p>
+            </div>
+
+            {% if is_edit and product.gallery_images.exists %}
+            <div class="mt-6 pt-6 border-t border-slate-100">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">Foto Galeri POV Tersimpan</h4>
+                <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3">
+                    {% for g_img in product.gallery_images.all %}
+                    <div class="relative group rounded-xl overflow-hidden border border-slate-200 aspect-square bg-slate-100" id="gallery-img-{{ g_img.id }}">
+                        <img src="{{ g_img.image.url }}" alt="Galeri" class="w-full h-full object-cover">
+                        <button type="button" onclick="deleteGalleryImage({{ g_img.id }})" class="absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white p-1 rounded-lg text-xs opacity-90 transition shadow-sm" title="Hapus foto ini">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                        </button>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
 
             <div class="pt-2">
                 <label class="flex items-center gap-3 cursor-pointer select-none">
@@ -102,5 +127,31 @@
     </div>
 
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function deleteGalleryImage(imageId) {
+        if (!confirm('Apakah Anda yakin ingin menghapus foto sudut pandang (POV) ini?')) return;
+
+        fetch(`/dashboard/products/images/${imageId}/delete/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'success') {
+                const el = document.getElementById(`gallery-img-${imageId}`);
+                if (el) el.remove();
+            } else {
+                alert('Gagal menghapus gambar.');
+            }
+        })
+        .catch(() => alert('Terjadi kesalahan koneksi server.'));
+    }
+</script>
 {% endblock %}
 
