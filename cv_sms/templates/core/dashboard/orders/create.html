@@ -1,0 +1,293 @@
+{% extends 'core/dashboard/base_dashboard.html' %}
+{% load static %}
+
+{% block page_title %}Catat Transaksi Manual / Walk-in{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto space-y-6">
+    
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-black text-[#1E293B] tracking-tight">Catat Transaksi Manual (Walk-in)</h1>
+            <p class="text-xs text-slate-500 mt-0.5">Input pesanan langsung untuk pembeli yang datang ke toko atau memesan secara offline/tunai.</p>
+        </div>
+        <a href="{% url 'dashboard_order_list' %}" class="text-xs font-bold text-slate-600 hover:text-slate-800">
+            &larr; Batal & Kembali
+        </a>
+    </div>
+
+    <form method="POST" id="walkin-order-form">
+        {% csrf_token %}
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            
+            <!-- Left: Customer & Payment Details -->
+            <div class="lg:col-span-6 bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-sm space-y-4">
+                <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-3 flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-[#8080FF]"></span>
+                    Informasi Pembeli & Pembayaran
+                </h2>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                        Hubungkan ke Akun Pelanggan (Opsional)
+                    </label>
+                    {{ form.customer }}
+                    <span class="text-[11px] text-slate-400 mt-0.5 block">Pilih jika pembeli sudah memiliki akun di sistem.</span>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                        Nama Pembeli / Penerima <span class="text-rose-500">*</span>
+                    </label>
+                    {{ form.recipient_name }}
+                    {% if form.recipient_name.errors %}
+                        <p class="text-xs text-rose-500 mt-1">{{ form.recipient_name.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                        Nomor HP / WhatsApp <span class="text-rose-500">*</span>
+                    </label>
+                    {{ form.recipient_phone }}
+                    {% if form.recipient_phone.errors %}
+                        <p class="text-xs text-rose-500 mt-1">{{ form.recipient_phone.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                            Metode Pembayaran <span class="text-rose-500">*</span>
+                        </label>
+                        {{ form.payment_method }}
+                    </div>
+
+                    <div id="bank-select-wrapper">
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                            Rekening Bank (Jika Transfer)
+                        </label>
+                        {{ form.selected_bank }}
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                        Catatan Pengambilan / Pengiriman
+                    </label>
+                    {{ form.shipping_address }}
+                </div>
+            </div>
+
+            <!-- Right: Products & Cart Items -->
+            <div class="lg:col-span-6 bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-sm space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                    <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-[#FF807F]"></span>
+                        Daftar Produk yang Dibeli
+                    </h2>
+                    <button type="button" id="btn-add-item-row" class="text-xs font-bold text-[#8080FF] hover:underline flex items-center gap-1">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+                        <span>Tambah Baris Produk</span>
+                    </button>
+                </div>
+
+                <!-- Products Table / List -->
+                <div id="items-container" class="space-y-3">
+                    <!-- Default First Item Row -->
+                    <div class="item-row p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2">
+                        <div class="flex items-center justify-between gap-2">
+                            <span class="text-xs font-bold text-slate-600 item-index-label">Item 1</span>
+                            <button type="button" class="btn-remove-row text-rose-500 hover:text-rose-700 text-xs font-bold hidden">&times; Hapus</button>
+                        </div>
+                        <div class="grid grid-cols-12 gap-3 items-center">
+                            <div class="col-span-8">
+                                <select name="product_ids[]" class="product-select w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-medium focus:ring-2 focus:ring-[#FF807F] focus:outline-none" required>
+                                    <option value="" disabled selected>-- Pilih Produk --</option>
+                                    {% for p in products %}
+                                    <option value="{{ p.id }}" data-price="{{ p.price }}" data-unit="{{ p.unit }}">
+                                        {{ p.name }} ({{ p.formatted_price }} / {{ p.unit }})
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-span-4">
+                                <div class="flex items-center border border-slate-300 rounded-xl bg-white overflow-hidden">
+                                    <input type="number" name="quantities[]" value="1" min="1" class="qty-input w-full text-center py-2 text-xs font-bold text-slate-800 focus:outline-none" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right text-xs text-slate-500">
+                            Subtotal: <strong class="text-slate-800 row-subtotal">Rp 0</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hidden inputs to satisfy default Django form validation if only single product row -->
+                <div class="hidden">
+                    {{ form.product }}
+                    {{ form.quantity }}
+                </div>
+
+                <!-- Grand Total Calculation -->
+                <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-slate-400 block font-medium">Total Tagihan Transaksi:</span>
+                        <span class="text-2xl font-black text-[#FF807F]" id="grand-total-display">Rp 0</span>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="pt-2">
+                    <button type="submit" class="w-full py-4 px-6 rounded-2xl bg-[#FF807F] hover:bg-[#f26e6d] text-white font-extrabold text-sm shadow-md transition flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        <span>Konfirmasi & Simpan Transaksi</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Product data options HTML template
+    const productsData = [
+        {% for p in products %}
+        { id: "{{ p.id }}", name: "{{ p.name }}", price: {{ p.price }}, unit: "{{ p.unit }}", formatted: "{{ p.formatted_price }}" },
+        {% endfor %}
+    ];
+
+    const itemsContainer = document.getElementById('items-container');
+    const btnAddRow = document.getElementById('btn-add-item-row');
+    const grandTotalDisplay = document.getElementById('grand-total-display');
+    const paymentMethodSelect = document.getElementById('id_payment_method');
+    const bankSelectWrapper = document.getElementById('bank-select-wrapper');
+
+    // Toggle bank select visibility based on payment method
+    function toggleBankVisibility() {
+        if (paymentMethodSelect.value === 'cash_walkin') {
+            bankSelectWrapper.classList.add('opacity-40', 'pointer-events-none');
+        } else {
+            bankSelectWrapper.classList.remove('opacity-40', 'pointer-events-none');
+        }
+    }
+    if (paymentMethodSelect) {
+        paymentMethodSelect.addEventListener('change', toggleBankVisibility);
+        toggleBankVisibility();
+    }
+
+    // Calculate Subtotals and Grand Total
+    function recalculateTotals() {
+        let grandTotal = 0;
+        const rows = document.querySelectorAll('.item-row');
+
+        rows.forEach((row, index) => {
+            const select = row.querySelector('.product-select');
+            const qtyInput = row.querySelector('.qty-input');
+            const subtotalLabel = row.querySelector('.row-subtotal');
+            const indexLabel = row.querySelector('.item-index-label');
+            const btnRemove = row.querySelector('.btn-remove-row');
+
+            if (indexLabel) indexLabel.textContent = `Item ${index + 1}`;
+            if (btnRemove) {
+                if (rows.length > 1) btnRemove.classList.remove('hidden');
+                else btnRemove.classList.add('hidden');
+            }
+
+            const selectedOption = select.options[select.selectedIndex];
+            const price = selectedOption ? parseFloat(selectedOption.getAttribute('data-price')) || 0 : 0;
+            const qty = parseInt(qtyInput.value) || 1;
+            const subtotal = price * qty;
+            grandTotal += subtotal;
+
+            subtotalLabel.textContent = "Rp " + subtotal.toLocaleString('id-ID');
+        });
+
+        grandTotalDisplay.textContent = "Rp " + grandTotal.toLocaleString('id-ID');
+
+        // Sync first row with hidden form inputs for Django form validation
+        const firstRow = rows[0];
+        if (firstRow) {
+            const firstSelect = firstRow.querySelector('.product-select');
+            const firstQty = firstRow.querySelector('.qty-input');
+            const hiddenProduct = document.getElementById('id_product');
+            const hiddenQty = document.getElementById('id_quantity');
+            if (hiddenProduct && firstSelect) hiddenProduct.value = firstSelect.value;
+            if (hiddenQty && firstQty) hiddenQty.value = firstQty.value;
+        }
+    }
+
+    // Attach listeners to a row
+    function attachRowListeners(row) {
+        const select = row.querySelector('.product-select');
+        const qtyInput = row.querySelector('.qty-input');
+        const btnRemove = row.querySelector('.btn-remove-row');
+
+        select.addEventListener('change', recalculateTotals);
+        qtyInput.addEventListener('input', recalculateTotals);
+
+        btnRemove.addEventListener('click', function() {
+            if (document.querySelectorAll('.item-row').length > 1) {
+                row.remove();
+                recalculateTotals();
+            }
+        });
+    }
+
+    // Initialize first row
+    document.querySelectorAll('.item-row').forEach(attachRowListeners);
+
+    // Add new product row
+    btnAddRow.addEventListener('click', function() {
+        const rowCount = document.querySelectorAll('.item-row').length + 1;
+        const newRow = document.createElement('div');
+        newRow.className = 'item-row p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2';
+
+        let optionsHtml = '<option value="" disabled selected>-- Pilih Produk --</option>';
+        productsData.forEach(p => {
+            optionsHtml += `<option value="${p.id}" data-price="${p.price}" data-unit="${p.unit}">${p.name} (${p.formatted} / ${p.unit})</option>`;
+        });
+
+        newRow.innerHTML = `
+            <div class="flex items-center justify-between gap-2">
+                <span class="text-xs font-bold text-slate-600 item-index-label">Item ${rowCount}</span>
+                <button type="button" class="btn-remove-row text-rose-500 hover:text-rose-700 text-xs font-bold">&times; Hapus</button>
+            </div>
+            <div class="grid grid-cols-12 gap-3 items-center">
+                <div class="col-span-8">
+                    <select name="product_ids[]" class="product-select w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-medium focus:ring-2 focus:ring-[#FF807F] focus:outline-none" required>
+                        ${optionsHtml}
+                    </select>
+                </div>
+                <div class="col-span-4">
+                    <div class="flex items-center border border-slate-300 rounded-xl bg-white overflow-hidden">
+                        <input type="number" name="quantities[]" value="1" min="1" class="qty-input w-full text-center py-2 text-xs font-bold text-slate-800 focus:outline-none" required>
+                    </div>
+                </div>
+            </div>
+            <div class="text-right text-xs text-slate-500">
+                Subtotal: <strong class="text-slate-800 row-subtotal">Rp 0</strong>
+            </div>
+        `;
+
+        itemsContainer.appendChild(newRow);
+        attachRowListeners(newRow);
+        recalculateTotals();
+    });
+
+    // Auto-fill recipient name & phone when customer dropdown changes
+    const customerSelect = document.getElementById('id_customer');
+    const recipientNameInput = document.getElementById('id_recipient_name');
+    const recipientPhoneInput = document.getElementById('id_recipient_phone');
+    const shippingAddressInput = document.getElementById('id_shipping_address');
+
+    // Initial calculation
+    recalculateTotals();
+</script>
+{% endblock %}
+

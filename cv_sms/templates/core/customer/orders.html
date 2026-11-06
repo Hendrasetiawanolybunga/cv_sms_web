@@ -1,0 +1,104 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Riwayat Pesanan Saya - CV. Setia Makmur Surabaya{% endblock %}
+
+{% block content %}
+<div class="py-12 bg-[#F8FAFC]">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Breadcrumbs -->
+        <nav class="flex items-center gap-2 text-xs text-slate-500 mb-8 font-medium">
+            <a href="{% url 'home' %}" class="hover:text-[#FF807F]">Beranda</a>
+            <span>/</span>
+            <span class="text-slate-800 font-bold">Riwayat Pesanan</span>
+        </nav>
+
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+            <div>
+                <h1 class="text-2xl sm:text-3xl font-black text-[#1E293B] tracking-tight">
+                    Riwayat Pesanan Saya
+                </h1>
+                <p class="text-xs text-slate-500 mt-1">
+                    Halo <span class="font-bold text-slate-700">{{ current_customer.name }}</span>, berikut adalah daftar seluruh transaksi pesanan Anda.
+                </p>
+            </div>
+            <div>
+                <a href="{% url 'home' %}#products" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#FF807F] hover:bg-[#f26e6d] text-white font-bold text-xs shadow-sm transition">
+                    Pesan Produk Lagi
+                </a>
+            </div>
+        </div>
+
+        {% if orders %}
+        <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 divide-y divide-slate-100">
+            {% for order in orders %}
+            <div class="py-6 first:pt-0 last:pb-0 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                
+                <!-- Order Info -->
+                <div class="space-y-2">
+                    <div class="flex items-center gap-3">
+                        <span class="font-mono text-base font-extrabold text-[#1E293B]">
+                            #{{ order.order_code }}
+                        </span>
+                        <span class="text-xs px-2.5 py-0.5 rounded-full font-bold border {{ order.status_badge_class }}">
+                            {{ order.get_status_display }}
+                        </span>
+                    </div>
+
+                    <div class="flex items-center gap-4 text-xs text-slate-500 flex-wrap">
+                        <span>Tanggal: <strong class="text-slate-700">{{ order.created_at|date:"d M Y, H:i" }} WIB</strong></span>
+                        <span>•</span>
+                        <span>Penerima: <strong class="text-slate-700">{{ order.recipient_name }}</strong></span>
+                        <span>•</span>
+                        <span>Bank: <strong class="text-slate-700">{{ order.selected_bank.bank_name }}</strong></span>
+                    </div>
+
+                    <!-- Items Preview -->
+                    <div class="text-xs text-slate-500 pt-1">
+                        {% for item in order.items.all %}
+                            <span class="inline-block mr-2 bg-slate-50 border border-slate-200 px-2 py-0.5 rounded-lg text-slate-700 font-medium">
+                                {{ item.quantity }} {{ item.product.unit }} &times; {{ item.product.name }}
+                            </span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Total & Action -->
+                <div class="flex items-center justify-between md:justify-end gap-6 pt-2 md:pt-0 border-t md:border-0 border-slate-50">
+                    <div class="text-left md:text-right">
+                        <span class="text-xs text-slate-400 block font-medium">Total Pesanan:</span>
+                        <span class="text-lg font-black text-[#FF807F] block">
+                            {{ order.formatted_total }}
+                        </span>
+                    </div>
+
+                    <a href="{% url 'order_detail' order.order_code %}" class="px-4 py-2.5 rounded-xl border border-slate-200 hover:border-[#8080FF] hover:text-[#8080FF] text-slate-700 text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+                        <span>Lihat Rincian</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <!-- Empty State -->
+        <div class="max-w-md mx-auto text-center py-16 px-6 bg-white rounded-3xl border border-dashed border-slate-200">
+            <div class="w-16 h-16 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+            </div>
+            <h3 class="text-lg font-bold text-slate-800">Belum Ada Riwayat Pesanan</h3>
+            <p class="text-xs text-slate-500 mt-1 mb-6">
+                Anda belum pernah melakukan pemesanan di CV. Setia Makmur Surabaya.
+            </p>
+            <a href="{% url 'home' %}#products" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#FF807F] text-white font-bold text-xs shadow-md transition">
+                Lihat Katalog Produk
+            </a>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}
+

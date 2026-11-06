@@ -1,0 +1,106 @@
+{% extends 'core/dashboard/base_dashboard.html' %}
+{% load static %}
+
+{% block page_title %}{{ action_title }}{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto space-y-6">
+    
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-black text-[#1E293B] tracking-tight">{{ action_title }}</h1>
+            <p class="text-xs text-slate-500 mt-0.5">Isi detail informasi produk secara akurat untuk ditampilkan di website publik.</p>
+        </div>
+        <a href="{% url 'dashboard_product_list' %}" class="text-xs font-bold text-slate-600 hover:text-slate-800">
+            &larr; Batal & Kembali
+        </a>
+    </div>
+
+    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-sm">
+        <form method="POST" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                    Nama Produk <span class="text-rose-500">*</span>
+                </label>
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <p class="text-xs text-rose-500 mt-1">{{ form.name.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                        Harga Satuan (Rp) <span class="text-rose-500">*</span>
+                    </label>
+                    {{ form.price }}
+                    {% if form.price.errors %}
+                        <p class="text-xs text-rose-500 mt-1">{{ form.price.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                        Satuan Penjualan <span class="text-rose-500">*</span>
+                    </label>
+                    {{ form.unit }}
+                    <span class="text-[11px] text-slate-400 mt-0.5 block">Contoh: kg, lusin, unit, roll</span>
+                    {% if form.unit.errors %}
+                        <p class="text-xs text-rose-500 mt-1">{{ form.unit.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                    Deskripsi Produk
+                </label>
+                {{ form.description }}
+                {% if form.description.errors %}
+                    <p class="text-xs text-rose-500 mt-1">{{ form.description.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                    Foto Produk
+                </label>
+                {% if is_edit and product.image %}
+                    <div class="mb-3 flex items-center gap-3 p-3 bg-slate-50 rounded-2xl border border-slate-200">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-14 h-14 object-cover rounded-xl">
+                        <div class="text-xs">
+                            <span class="font-bold text-slate-700 block">Foto Saat Ini</span>
+                            <span class="text-slate-400">Pilih file baru di bawah jika ingin mengganti</span>
+                        </div>
+                    </div>
+                {% endif %}
+                {{ form.image }}
+                {% if form.image.errors %}
+                    <p class="text-xs text-rose-500 mt-1">{{ form.image.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div class="pt-2">
+                <label class="flex items-center gap-3 cursor-pointer select-none">
+                    {{ form.is_active }}
+                    <span class="text-xs font-bold text-slate-700">Aktifkan produk (tampilkan di website publik)</span>
+                </label>
+            </div>
+
+            <div class="pt-6 border-t border-slate-100 flex items-center justify-end gap-3">
+                <a href="{% url 'dashboard_product_list' %}" class="px-5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 transition">
+                    Batal
+                </a>
+                <button type="submit" class="px-6 py-2.5 rounded-xl bg-[#FF807F] hover:bg-[#f26e6d] text-white text-xs font-bold shadow-md transition">
+                    Simpan Produk
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+{% endblock %}
+

@@ -1,0 +1,98 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Masuk Akun Pelanggan - CV. Setia Makmur Surabaya{% endblock %}
+
+{% block content %}
+<div class="py-16 bg-[#F8FAFC]">
+    <div class="max-w-md mx-auto px-4 sm:px-6">
+        
+        <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <div class="w-14 h-14 rounded-2xl bg-[#8080FF]/10 text-[#8080FF] flex items-center justify-center mx-auto mb-3">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
+                </div>
+                <h1 class="text-2xl font-black text-[#1E293B] tracking-tight">Masuk Akun Pelanggan</h1>
+                <p class="text-xs text-slate-500 mt-1">
+                    Masuk dengan alamat email atau nomor handphone yang telah Anda daftarkan.
+                </p>
+            </div>
+
+            <form action="{% url 'customer_login' %}" method="POST" class="space-y-4">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next }}">
+
+                <!-- Identifier (Email atau HP) -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                        Email atau Nomor HP <span class="text-rose-500">*</span>
+                    </label>
+                    {{ form.identifier }}
+                    {% if form.identifier.errors %}
+                        <p class="text-xs text-rose-500 mt-1">{{ form.identifier.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Password with Vanilla JS Toggle -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                        Password <span class="text-rose-500">*</span>
+                    </label>
+                    <div class="relative">
+                        {{ form.password }}
+                        <button type="button" class="btn-toggle-password absolute right-3.5 top-3 text-slate-400 hover:text-slate-600 focus:outline-none" data-target="id_password" title="Lihat/Sembunyikan Password">
+                            <svg class="icon-eye w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                            <svg class="icon-eye-off w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"/></svg>
+                        </button>
+                    </div>
+                    {% if form.password.errors %}
+                        <p class="text-xs text-rose-500 mt-1">{{ form.password.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Submit Button -->
+                <div class="pt-4">
+                    <button type="submit" class="w-full py-3.5 px-4 rounded-xl bg-[#8080FF] hover:bg-[#6e6ef2] text-white font-bold text-sm shadow-md transition transform hover:-translate-y-0.5">
+                        Masuk ke Akun
+                    </button>
+                </div>
+            </form>
+
+            <!-- Footer Link -->
+            <div class="text-center mt-6 pt-6 border-t border-slate-100 text-xs text-slate-500">
+                Belum memiliki akun pelanggan? 
+                <a href="{% url 'customer_register' %}{% if next %}?next={{ next }}{% endif %}" class="font-bold text-[#FF807F] hover:underline">
+                    Daftar sekarang
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Vanilla JS Show/Hide Password Toggle
+    document.querySelectorAll('.btn-toggle-password').forEach(button => {
+        button.addEventListener('click', function() {
+            const targetId = this.getAttribute('data-target');
+            const input = document.getElementById(targetId);
+            const iconEye = this.querySelector('.icon-eye');
+            const iconEyeOff = this.querySelector('.icon-eye-off');
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                iconEye.classList.add('hidden');
+                iconEyeOff.classList.remove('hidden');
+            } else {
+                input.type = 'password';
+                iconEye.classList.remove('hidden');
+                iconEyeOff.classList.add('hidden');
+            }
+        });
+    });
+</script>
+{% endblock %}
+

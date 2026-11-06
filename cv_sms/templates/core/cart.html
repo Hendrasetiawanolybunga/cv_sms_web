@@ -1,0 +1,195 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Keranjang Belanja - CV. Setia Makmur Surabaya{% endblock %}
+
+{% block content %}
+<div class="py-12 bg-[#F8FAFC]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Breadcrumbs -->
+        <nav class="flex items-center gap-2 text-xs text-slate-500 mb-8 font-medium">
+            <a href="{% url 'home' %}" class="hover:text-[#FF807F]">Beranda</a>
+            <span>/</span>
+            <span class="text-slate-800 font-bold">Keranjang Belanja</span>
+        </nav>
+
+        <div class="flex items-center justify-between mb-8">
+            <h1 class="text-2xl sm:text-3xl font-black text-[#1E293B] tracking-tight">
+                Keranjang Belanja
+            </h1>
+            {% if cart_count > 0 %}
+            <form action="{% url 'cart_clear' %}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin mengosongkan keranjang belanja?');">
+                {% csrf_token %}
+                <button type="submit" class="text-xs font-semibold text-rose-500 hover:text-rose-700 flex items-center gap-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                    Kosongkan Keranjang
+                </button>
+            </form>
+            {% endif %}
+        </div>
+
+        {% if cart_count > 0 %}
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- Items Table (Left) -->
+            <div class="lg:col-span-8 bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100">
+                <div class="divide-y divide-slate-100">
+                    {% for item in cart %}
+                    <div class="py-6 first:pt-0 last:pb-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        
+                        <!-- Product Info -->
+                        <div class="flex items-center gap-4">
+                            <div class="w-20 h-20 rounded-2xl bg-slate-100 overflow-hidden flex-shrink-0 flex items-center justify-center border border-slate-100">
+                                {% if item.product.image %}
+                                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="w-full h-full object-cover">
+                                {% else %}
+                                    <span class="text-base font-black text-[#FF807F]">{{ item.product.name|slice:":2"|upper }}</span>
+                                {% endif %}
+                            </div>
+
+                            <div>
+                                <h3 class="font-bold text-slate-800 text-base">{{ item.product.name }}</h3>
+                                <p class="text-xs text-slate-500 mt-0.5">
+                                    Harga: <span class="font-semibold text-slate-700">{{ item.formatted_price }}</span> / {{ item.product.unit }}
+                                </p>
+                                <span class="inline-block mt-1 text-[11px] font-semibold text-[#8080FF] bg-[#8080FF]/10 px-2 py-0.5 rounded-full">
+                                    Satuan {{ item.product.unit }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Quantity Stepper & Subtotal -->
+                        <div class="flex items-center justify-between sm:justify-end gap-6 pt-2 sm:pt-0 border-t sm:border-0 border-slate-50">
+                            <!-- Quantity Update Form -->
+                            <form action="{% url 'cart_update' %}" method="POST" class="flex items-center border border-slate-200 rounded-xl bg-slate-50 overflow-hidden">
+                                {% csrf_token %}
+                                <input type="hidden" name="product_id" value="{{ item.product.id }}">
+                                
+                                <button type="button" class="btn-qty-minus px-2.5 py-1.5 text-slate-600 hover:bg-slate-200 text-sm font-bold transition select-none">-</button>
+                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="qty-input w-12 text-center bg-transparent border-0 text-sm font-bold text-slate-800 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                                <button type="button" class="btn-qty-plus px-2.5 py-1.5 text-slate-600 hover:bg-slate-200 text-sm font-bold transition select-none">+</button>
+                                
+                                <button type="submit" class="hidden update-submit-btn"></button>
+                            </form>
+
+                            <!-- Subtotal -->
+                            <div class="text-right min-w-[110px]">
+                                <span class="text-xs text-slate-400 block font-medium">Subtotal:</span>
+                                <span class="text-base font-extrabold text-[#1E293B] block">
+                                    {{ item.formatted_subtotal }}
+                                </span>
+                            </div>
+
+                            <!-- Delete Item Button -->
+                            <a href="{% url 'cart_remove' item.product.id %}" class="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-xl transition" title="Hapus produk">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                            </a>
+                        </div>
+
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="mt-8 pt-6 border-t border-slate-100 flex items-center justify-between">
+                    <a href="{% url 'home' %}#products" class="inline-flex items-center gap-2 text-sm font-bold text-[#8080FF] hover:underline">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                        Lanjut Pilih Produk Lain
+                    </a>
+                </div>
+            </div>
+
+            <!-- Order Summary (Right) -->
+            <div class="lg:col-span-4 bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 space-y-6">
+                <h2 class="text-lg font-bold text-[#1E293B]">Ringkasan Belanja</h2>
+
+                <div class="space-y-3 text-sm">
+                    <div class="flex items-center justify-between text-slate-600">
+                        <span>Total Kuantitas:</span>
+                        <span class="font-bold text-slate-800">{{ cart_count }} Item</span>
+                    </div>
+                    <div class="flex items-center justify-between text-slate-600">
+                        <span>Status Pajak & Ongkir:</span>
+                        <span class="text-xs text-slate-400 font-medium">Belum termasuk / konfirmasi via WA</span>
+                    </div>
+                    <div class="border-t border-slate-100 pt-3 flex items-center justify-between">
+                        <span class="font-bold text-base text-[#1E293B]">Total Pembayaran:</span>
+                        <span class="text-2xl font-black text-[#FF807F]">
+                            {{ cart_formatted_total }}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="space-y-3 pt-2">
+                    <a href="{% url 'checkout' %}" class="w-full py-4 px-6 rounded-2xl bg-[#FF807F] hover:bg-[#f26e6d] text-white font-bold text-center block shadow-lg shadow-[#FF807F]/20 hover:shadow-xl hover:shadow-[#FF807F]/30 transition transform hover:-translate-y-0.5">
+                        Lanjut ke Pembayaran &rarr;
+                    </a>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 text-xs text-slate-500 space-y-2">
+                    <div class="flex items-center gap-2 font-bold text-slate-700">
+                        <svg class="w-4 h-4 text-[#8080FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        Informasi Pembayaran
+                    </div>
+                    <p class="leading-relaxed">
+                        Di halaman berikutnya, Anda dapat memilih rekening transfer tujuan (BCA, Mandiri, BRI) dan mengunggah foto bukti transfer.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        {% else %}
+        <!-- Empty Cart State -->
+        <div class="max-w-md mx-auto text-center py-16 px-6 bg-white rounded-3xl border border-dashed border-slate-200">
+            <div class="w-20 h-20 rounded-full bg-[#FF807F]/10 text-[#FF807F] flex items-center justify-center mx-auto mb-4">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+            </div>
+            <h3 class="text-xl font-bold text-slate-800">Keranjang Belanja Anda Kosong</h3>
+            <p class="text-sm text-slate-500 mt-2 mb-6">
+                Anda belum menambahkan produk apa pun ke keranjang belanja.
+            </p>
+            <a href="{% url 'home' %}#products" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-[#FF807F] hover:bg-[#f26e6d] text-white font-bold text-sm shadow-md transition">
+                <span>Mulai Belanja Sekarang</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Quantity change triggers auto-submit of the item's form
+    document.querySelectorAll('.btn-qty-minus, .btn-qty-plus').forEach(button => {
+        button.addEventListener('click', function() {
+            const form = this.closest('form');
+            const input = form.querySelector('.qty-input');
+            let currentVal = parseInt(input.value) || 1;
+
+            if (this.classList.contains('btn-qty-minus')) {
+                if (currentVal > 1) {
+                    input.value = currentVal - 1;
+                    form.submit();
+                }
+            } else if (this.classList.contains('btn-qty-plus')) {
+                input.value = currentVal + 1;
+                form.submit();
+            }
+        });
+    });
+
+    document.querySelectorAll('.qty-input').forEach(input => {
+        input.addEventListener('change', function() {
+            const form = this.closest('form');
+            if (parseInt(this.value) < 1 || isNaN(parseInt(this.value))) {
+                this.value = 1;
+            }
+            form.submit();
+        });
+    });
+</script>
+{% endblock %}
+

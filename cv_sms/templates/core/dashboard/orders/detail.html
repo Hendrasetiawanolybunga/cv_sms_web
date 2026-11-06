@@ -1,0 +1,230 @@
+{% extends 'core/dashboard/base_dashboard.html' %}
+{% load static %}
+
+{% block page_title %}Tinjau Pesanan #{{ order.order_code }}{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto space-y-6">
+    
+    <!-- Top Action Bar -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+            <div class="flex items-center gap-2">
+                <a href="{% url 'dashboard_order_list' %}" class="text-xs font-bold text-slate-500 hover:text-slate-800">
+                    &larr; Daftar Pesanan
+                </a>
+                <span class="text-slate-300">/</span>
+                <span class="text-xs font-mono font-bold text-[#1E293B]">#{{ order.order_code }}</span>
+            </div>
+            <h1 class="text-2xl font-black text-[#1E293B] tracking-tight mt-1">Detail & Validasi Transaksi</h1>
+        </div>
+
+        <!-- Status Changer Form -->
+        <div class="flex items-center gap-2 bg-white p-2 rounded-2xl border border-slate-200 shadow-sm">
+            <span class="text-xs font-bold text-slate-500 pl-2">Status Saat Ini:</span>
+            <span class="px-2.5 py-1 rounded-full text-xs font-bold border {{ order.status_badge_class }}">
+                {{ order.get_status_display }}
+            </span>
+
+            <form action="{% url 'dashboard_order_status_update' order.id %}" method="POST" class="inline-flex items-center gap-1.5 ml-2">
+                {% csrf_token %}
+                {% if order.status != 'confirmed' %}
+                <button type="submit" name="status" value="confirmed" onclick="return confirm('Konfirmasi pesanan ini? Pastikan bukti transfer valid.');" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-sm transition">
+                    ✓ Konfirmasi
+                </button>
+                {% endif %}
+
+                {% if order.status != 'rejected' %}
+                <button type="submit" name="status" value="rejected" onclick="return confirm('Tolak pesanan ini?');" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-sm transition">
+                    ✕ Tolak
+                </button>
+                {% endif %}
+
+                {% if order.status != 'pending' %}
+                <button type="submit" name="status" value="pending" class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-sm transition">
+                    ↺ Set Pending
+                </button>
+                {% endif %}
+            </form>
+
+            <a href="{% url 'dashboard_order_delete' order.id %}" class="p-2 text-rose-500 hover:bg-rose-50 rounded-xl transition ml-1" title="Hapus Pesanan">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Grid: Info & Proof -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- Left: Recipient & Payment Details -->
+        <div class="lg:col-span-7 space-y-6">
+            
+            <!-- Recipient Card -->
+            <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm space-y-4">
+                <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-3 flex items-center justify-between">
+                    <span>Informasi Penerima & Pengiriman</span>
+                    <a href="https://wa.me/{% if order.recipient_phone|slice:':1' == '0' %}62{{ order.recipient_phone|slice:'1:' }}{% else %}{{ order.recipient_phone }}{% endif %}?text=Halo%20{{ order.recipient_name }},%20kami%20dari%20CV.%20Setia%20Makmur%20Surabaya%20mengenai%20pesanan%20%23{{ order.order_code }}" target="_blank" class="text-xs font-bold text-emerald-600 hover:underline flex items-center gap-1">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                        Hubungi via WhatsApp
+                    </a>
+                </h2>
+
+                <div class="grid grid-cols-2 gap-4 text-xs">
+                    <div>
+                        <span class="text-slate-400 block">Nama Penerima:</span>
+                        <span class="font-bold text-slate-800 text-sm">{{ order.recipient_name }}</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block">Nomor HP/WA:</span>
+                        <span class="font-bold text-slate-800 text-sm">{{ order.recipient_phone }}</span>
+                    </div>
+                    <div class="col-span-2">
+                        <span class="text-slate-400 block">Alamat Tujuan Pengiriman:</span>
+                        <p class="font-medium text-slate-700 leading-relaxed mt-1 p-3 bg-slate-50 rounded-xl border border-slate-200/60">
+                            {{ order.shipping_address|linebreaksbr }}
+                        </p>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block">Akun Pelanggan Terkait:</span>
+                        {% if order.customer %}
+                            <span class="font-bold text-[#8080FF]">{{ order.customer.name }} ({{ order.customer.email }})</span>
+                        {% else %}
+                            <span class="text-slate-400 italic">Checkout Tamu (Non-akun)</span>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block">Waktu Checkout:</span>
+                        <span class="font-semibold text-slate-700">{{ order.created_at|date:"d M Y, H:i:s" }} WIB</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bank & Total Amount Card -->
+            <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm space-y-4">
+                <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-3">
+                    Metode Pembayaran & Nominal
+                </h2>
+                <div class="grid grid-cols-2 gap-4 text-xs">
+                    <div>
+                        <span class="text-slate-400 block">Metode Pembayaran:</span>
+                        {% if order.payment_method == 'cash_walkin' %}
+                            <span class="font-bold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200 inline-block mt-0.5">
+                                💵 Tunai / Walk-in Toko
+                            </span>
+                        {% else %}
+                            <span class="font-bold text-slate-800 text-sm">Transfer Bank</span>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block">Bank Tujuan:</span>
+                        {% if order.selected_bank %}
+                            <span class="font-mono font-bold text-[#8080FF] text-sm">{{ order.selected_bank.bank_name }} - {{ order.selected_bank.account_number }}</span>
+                            <span class="text-[11px] text-slate-400 block">a.n. {{ order.selected_bank.account_holder }}</span>
+                        {% else %}
+                            <span class="text-slate-500 font-medium">Pembayaran Langsung di Kasir</span>
+                        {% endif %}
+                    </div>
+                    <div class="col-span-2 pt-2 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-slate-600 font-bold">Total Pembayaran:</span>
+                        <span class="text-2xl font-black text-[#FF807F]">{{ order.formatted_total }}</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right: Bukti Transfer Review with Click to Enlarge -->
+        <div class="lg:col-span-5 bg-white rounded-3xl p-6 border border-slate-100 shadow-sm space-y-4">
+            <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-3 flex items-center justify-between">
+                <span>Bukti Pembayaran</span>
+                {% if order.payment_proof %}
+                <button type="button" onclick="openDashboardImageModal('{{ order.payment_proof.url }}', 'Bukti Transfer #{{ order.order_code }}')" class="text-xs font-bold text-[#8080FF] hover:underline">
+                    Perbesar &rarr;
+                </button>
+                {% endif %}
+            </h2>
+
+            {% if order.payment_method == 'cash_walkin' %}
+                <div class="py-10 px-6 text-center bg-emerald-50/60 border border-emerald-200 rounded-2xl space-y-2">
+                    <div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto text-xl font-bold">
+                        ✓
+                    </div>
+                    <h3 class="font-bold text-sm text-emerald-900">Pembayaran Tunai Kasir</h3>
+                    <p class="text-xs text-emerald-700 leading-relaxed">
+                        Transaksi ini dicatat secara langsung di toko (walk-in). Pembayaran diterima tunai tanpa memerlukan bukti transfer.
+                    </p>
+                </div>
+            {% elif order.payment_proof %}
+                <div class="relative group rounded-2xl overflow-hidden border border-slate-200 bg-slate-100 cursor-pointer" onclick="openDashboardImageModal('{{ order.payment_proof.url }}', 'Bukti Transfer #{{ order.order_code }}')">
+                    <img src="{{ order.payment_proof.url }}" alt="Bukti Transfer" class="w-full max-h-96 object-contain">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs font-bold gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
+                        <span>Klik untuk Memperbesar Gambar</span>
+                    </div>
+                </div>
+                <p class="text-[11px] text-slate-400 text-center">Klik pada gambar untuk melihat tampilan ukuran penuh dan memeriksa detail nominal transfer.</p>
+            {% else %}
+                <div class="py-12 text-center text-slate-400 border border-dashed border-slate-200 rounded-2xl">
+                    <p class="text-xs">Pelanggan belum mengunggah bukti transfer.</p>
+                </div>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <!-- Ordered Items Table -->
+    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-sm space-y-4">
+        <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-3">
+            Daftar Produk yang Dipesan
+        </h2>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+                <thead>
+                    <tr class="border-b border-slate-100 text-slate-400 font-bold uppercase tracking-wider">
+                        <th class="pb-3 pl-2">Produk</th>
+                        <th class="pb-3">Harga Satuan</th>
+                        <th class="pb-3">Kuantitas</th>
+                        <th class="pb-3 pr-2 text-right">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    {% for item in items %}
+                    <tr>
+                        <td class="py-3 pl-2 flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-slate-100 overflow-hidden flex items-center justify-center font-bold text-slate-400 border border-slate-200">
+                                {% if item.product.image %}
+                                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="w-full h-full object-cover">
+                                {% else %}
+                                    {{ item.product.name|slice:":2"|upper }}
+                                {% endif %}
+                            </div>
+                            <div>
+                                <span class="font-bold text-slate-800 block">{{ item.product.name }}</span>
+                                <span class="text-[11px] text-slate-400 font-mono">slug: {{ item.product.slug }}</span>
+                            </div>
+                        </td>
+                        <td class="py-3 text-slate-600 font-semibold">
+                            {{ item.formatted_price }} / {{ item.product.unit }}
+                        </td>
+                        <td class="py-3 font-bold text-slate-800">
+                            {{ item.quantity }} {{ item.product.unit }}
+                        </td>
+                        <td class="py-3 pr-2 text-right font-black text-slate-800">
+                            {{ item.formatted_subtotal }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr class="border-t-2 border-slate-100 text-sm font-bold">
+                        <td colspan="3" class="pt-4 text-slate-700">Total Keseluruhan Pesanan:</td>
+                        <td class="pt-4 pr-2 text-right font-black text-xl text-[#FF807F]">{{ order.formatted_total }}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+

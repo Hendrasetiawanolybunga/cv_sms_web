@@ -1,0 +1,131 @@
+{% extends 'core/dashboard/base_dashboard.html' %}
+
+{% block page_title %}{{ action_title }}{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto space-y-6">
+    
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-black text-[#1E293B] tracking-tight">{{ action_title }}</h1>
+            <p class="text-xs text-slate-500 mt-0.5">Kelola hak akses operasional dan keamanan kredensial akun staf internal.</p>
+        </div>
+        <a href="{% url 'dashboard_user_list' %}" class="text-xs font-bold text-slate-600 hover:text-slate-800">
+            &larr; Batal & Kembali
+        </a>
+    </div>
+
+    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-sm">
+        <form method="POST" class="space-y-4">
+            {% csrf_token %}
+
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                    Username <span class="text-rose-500">*</span>
+                </label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <p class="text-xs text-rose-500 mt-1">{{ form.username.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                        Nama Depan
+                    </label>
+                    {{ form.first_name }}
+                    {% if form.first_name.errors %}
+                        <p class="text-xs text-rose-500 mt-1">{{ form.first_name.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                        Nama Belakang
+                    </label>
+                    {{ form.last_name }}
+                    {% if form.last_name.errors %}
+                        <p class="text-xs text-rose-500 mt-1">{{ form.last_name.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                    Alamat Email
+                </label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <p class="text-xs text-rose-500 mt-1">{{ form.email.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            {% if is_edit %}
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                        Password Baru (Opsional)
+                    </label>
+                    {{ form.new_password }}
+                    <span class="text-[11px] text-slate-400 mt-0.5 block">Kosongkan kolom ini bila tidak ingin mengganti password pengguna.</span>
+                    {% if form.new_password.errors %}
+                        <p class="text-xs text-rose-500 mt-1">{{ form.new_password.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            {% else %}
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                        Password <span class="text-rose-500">*</span>
+                    </label>
+                    {{ form.password }}
+                    {% if form.password.errors %}
+                        <p class="text-xs text-rose-500 mt-1">{{ form.password.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            <!-- Permissions / Roles -->
+            <div class="pt-4 border-t border-slate-100 space-y-3">
+                <span class="text-xs font-bold text-slate-800 uppercase tracking-wider block">Hak Akses & Status</span>
+
+                <label class="flex items-center gap-3 cursor-pointer select-none">
+                    {{ form.is_staff }}
+                    <div>
+                        <span class="text-xs font-bold text-slate-700 block">Hak Akses Staf Dashboard</span>
+                        <span class="text-[11px] text-slate-400">Izinkan akun ini masuk dan mengelola menu dashboard internal.</span>
+                    </div>
+                </label>
+
+                <label class="flex items-center gap-3 cursor-pointer select-none">
+                    {{ form.is_superuser }}
+                    <div>
+                        <span class="text-xs font-bold text-slate-700 block">Hak Superuser (Administrator Tertinggi)</span>
+                        <span class="text-[11px] text-slate-400">Memiliki seluruh izin akses administratif tak terbatas.</span>
+                    </div>
+                </label>
+
+                {% if is_edit %}
+                <label class="flex items-center gap-3 cursor-pointer select-none">
+                    {{ form.is_active }}
+                    <div>
+                        <span class="text-xs font-bold text-slate-700 block">Akun Aktif</span>
+                        <span class="text-[11px] text-slate-400">Hilangkan centang untuk membekukan akses login user ini.</span>
+                    </div>
+                </label>
+                {% endif %}
+            </div>
+
+            <div class="pt-6 border-t border-slate-100 flex items-center justify-end gap-3">
+                <a href="{% url 'dashboard_user_list' %}" class="px-5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 transition">
+                    Batal
+                </a>
+                <button type="submit" class="px-6 py-2.5 rounded-xl bg-[#FF807F] hover:bg-[#f26e6d] text-white text-xs font-bold shadow-md transition">
+                    Simpan Pengguna
+                </button>
+            </div>
+        </form>
+    </div>
+
+</div>
+{% endblock %}
+

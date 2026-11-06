@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Dashboard Admin - CV. Setia Makmur Surabaya</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            primary: '#FF807F',
+                            secondary: '#8080FF',
+                            slate: '#1E293B',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex items-center justify-center p-4 font-sans relative overflow-hidden">
+    
+    <!-- Background glow decor -->
+    <div class="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-[#FF807F]/20 blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-32 -right-32 w-96 h-96 rounded-full bg-[#8080FF]/20 blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-md w-full bg-[#1E293B] rounded-3xl p-8 border border-slate-800 shadow-2xl relative z-10">
+        
+        <!-- Logo & Header -->
+        <div class="text-center mb-8">
+            <div class="w-16 h-16 rounded-2xl bg-white p-2 shadow-md flex items-center justify-center mx-auto mb-4">
+                <img src="{% static 'images/logo.png' %}" alt="Logo" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='https://placehold.co/100x100/FF807F/FFFFFF?text=SMS';">
+            </div>
+            <h1 class="text-xl font-extrabold text-white tracking-tight">Portal Internal Staf Admin</h1>
+            <p class="text-xs text-slate-400 mt-1">CV. Setia Makmur Surabaya</p>
+        </div>
+
+        <!-- Messages / Alerts -->
+        {% if messages %}
+        <div class="mb-6 space-y-2">
+            {% for message in messages %}
+            <div class="p-3.5 rounded-xl text-xs font-semibold {% if message.tags == 'error' %}bg-rose-500/10 text-rose-400 border border-rose-500/20{% else %}bg-[#8080FF]/10 text-[#8080FF] border border-[#8080FF]/20{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <form action="{% url 'dashboard_login' %}" method="POST" class="space-y-4">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}">
+
+            <div>
+                <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                    Username Staf
+                </label>
+                <div class="relative">
+                    <input type="text" name="username" required placeholder="Masukkan username" 
+                        class="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#FF807F] focus:border-transparent transition">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                    Password Staf
+                </label>
+                <div class="relative">
+                    <input type="password" name="password" id="admin_password" required placeholder="Masukkan password" 
+                        class="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#FF807F] focus:border-transparent transition pr-12">
+                    <button type="button" id="toggle-admin-pwd" class="absolute right-3.5 top-3.5 text-slate-400 hover:text-slate-200">
+                        <svg class="icon-eye w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                        <svg class="icon-eye-off w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="pt-4">
+                <button type="submit" class="w-full py-3.5 px-4 rounded-xl bg-[#FF807F] hover:bg-[#f26e6d] text-white font-bold text-sm shadow-lg shadow-[#FF807F]/25 transition transform hover:-translate-y-0.5">
+                    Masuk ke Dashboard
+                </button>
+            </div>
+        </form>
+
+        <div class="mt-8 pt-6 border-t border-slate-800 text-center text-xs text-slate-500">
+            <a href="{% url 'home' %}" class="hover:text-slate-300 transition">
+                &larr; Kembali ke Website Toko
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+        const toggleBtn = document.getElementById('toggle-admin-pwd');
+        const pwdInput = document.getElementById('admin_password');
+        if (toggleBtn && pwdInput) {
+            toggleBtn.addEventListener('click', () => {
+                const iconEye = toggleBtn.querySelector('.icon-eye');
+                const iconEyeOff = toggleBtn.querySelector('.icon-eye-off');
+                if (pwdInput.type === 'password') {
+                    pwdInput.type = 'text';
+                    iconEye.classList.add('hidden');
+                    iconEyeOff.classList.remove('hidden');
+                } else {
+                    pwdInput.type = 'password';
+                    iconEye.classList.remove('hidden');
+                    iconEyeOff.classList.add('hidden');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+

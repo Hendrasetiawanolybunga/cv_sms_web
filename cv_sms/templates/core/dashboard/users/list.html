@@ -1,0 +1,106 @@
+{% extends 'core/dashboard/base_dashboard.html' %}
+{% load static %}
+
+{% block page_title %}Pengguna Internal Staf{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-black text-[#1E293B] tracking-tight">Akun Staf & Administrator Internal</h1>
+            <p class="text-xs text-slate-500 mt-0.5">Kelola pengguna yang berwenang mengakses antarmuka dashboard admin ini.</p>
+        </div>
+
+        <a href="{% url 'dashboard_user_create' %}" class="px-4 py-2.5 rounded-xl bg-[#FF807F] hover:bg-[#f26e6d] text-white font-bold text-xs shadow-md transition flex items-center gap-1.5 flex-shrink-0">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+            <span>Tambah Pengguna</span>
+        </a>
+    </div>
+
+    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+                <thead>
+                    <tr class="border-b border-slate-100 text-slate-400 font-bold uppercase tracking-wider">
+                        <th class="pb-3 pl-2">Username</th>
+                        <th class="pb-3">Nama Lengkap</th>
+                        <th class="pb-3">Email</th>
+                        <th class="pb-3">Peran Hak Akses</th>
+                        <th class="pb-3">Status</th>
+                        <th class="pb-3">Terakhir Login</th>
+                        <th class="pb-3 pr-2 text-right">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    {% for u in users %}
+                    <tr class="hover:bg-slate-50/70 transition">
+                        <td class="py-4 pl-2 font-bold text-slate-800">
+                            {{ u.username }}
+                            {% if u == request.user %}
+                                <span class="text-[10px] text-[#FF807F] font-bold ml-1">(Anda)</span>
+                            {% endif %}
+                        </td>
+                        <td class="py-4 font-medium text-slate-700">
+                            {{ u.get_full_name|default:"-" }}
+                        </td>
+                        <td class="py-4 text-slate-500">
+                            {{ u.email|default:"-" }}
+                        </td>
+                        <td class="py-4">
+                            {% if u.is_superuser %}
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#FF807F]/10 text-[#FF807F] border border-[#FF807F]/20">
+                                    Superuser Admin
+                                </span>
+                            {% elif u.is_staff %}
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#8080FF]/10 text-[#8080FF] border border-[#8080FF]/20">
+                                    Staf Operasional
+                                </span>
+                            {% else %}
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500">
+                                    User Biasa
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td class="py-4">
+                            {% if u.is_active %}
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                    Aktif
+                                </span>
+                            {% else %}
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200">
+                                    Dinonaktifkan
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td class="py-4 text-slate-400">
+                            {{ u.last_login|date:"d M Y, H:i"|default:"Belum login" }}
+                        </td>
+                        <td class="py-4 pr-2 text-right">
+                            <div class="inline-flex items-center gap-1.5">
+                                {% if u != request.user %}
+                                <a href="{% url 'dashboard_user_toggle' u.id %}" class="p-1.5 rounded-lg border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition" title="Toggle Status Aktif">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                                </a>
+                                {% endif %}
+                                <a href="{% url 'dashboard_user_edit' u.id %}" class="p-1.5 rounded-lg border border-slate-200 text-[#8080FF] hover:bg-[#8080FF]/10 transition" title="Edit Pengguna">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center py-8 text-slate-400">
+                            Belum ada data staf lain.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+

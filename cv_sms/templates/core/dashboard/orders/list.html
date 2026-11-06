@@ -1,0 +1,144 @@
+{% extends 'core/dashboard/base_dashboard.html' %}
+{% load static %}
+
+{% block page_title %}Daftar Transaksi Pesanan{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    
+    <!-- Header with Search & Walk-in Action -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-black text-[#1E293B] tracking-tight">Daftar Transaksi Pesanan</h1>
+            <p class="text-xs text-slate-500 mt-0.5">Tinjau pesanan masuk, verifikasi bukti transfer pembayaran, atau catat transaksi walk-in kasir.</p>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <form method="GET" class="relative">
+                <input type="hidden" name="status" value="{{ status_filter }}">
+                <input type="text" name="q" value="{{ search_query }}" placeholder="Cari kode atau nama..." 
+                    class="pl-9 pr-4 py-2.5 rounded-xl border border-slate-200 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-[#8080FF] shadow-sm w-48 sm:w-60">
+                <svg class="w-4 h-4 text-slate-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </form>
+
+            <a href="{% url 'dashboard_order_create' %}" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5 flex-shrink-0">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+                <span>Catat Transaksi Walk-in</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Status Tabs -->
+    <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs font-bold">
+        <a href="{% url 'dashboard_order_list' %}?status=all{% if search_query %}&q={{ search_query }}{% endif %}" 
+            class="px-4 py-2.5 rounded-xl transition flex items-center gap-2 whitespace-nowrap {% if status_filter == 'all' %}bg-[#1E293B] text-white shadow-sm{% else %}bg-white text-slate-600 hover:bg-slate-100 border border-slate-200{% endif %}">
+            <span>Semua Pesanan</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] {% if status_filter == 'all' %}bg-white/20 text-white{% else %}bg-slate-100 text-slate-600{% endif %}">{{ all_count }}</span>
+        </a>
+
+        <a href="{% url 'dashboard_order_list' %}?status=pending{% if search_query %}&q={{ search_query }}{% endif %}" 
+            class="px-4 py-2.5 rounded-xl transition flex items-center gap-2 whitespace-nowrap {% if status_filter == 'pending' %}bg-amber-500 text-white shadow-sm{% else %}bg-white text-slate-600 hover:bg-slate-100 border border-slate-200{% endif %}">
+            <span>Menunggu Konfirmasi</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] {% if status_filter == 'pending' %}bg-white/20 text-white{% else %}bg-amber-50 text-amber-700{% endif %}">{{ pending_count }}</span>
+        </a>
+
+        <a href="{% url 'dashboard_order_list' %}?status=confirmed{% if search_query %}&q={{ search_query }}{% endif %}" 
+            class="px-4 py-2.5 rounded-xl transition flex items-center gap-2 whitespace-nowrap {% if status_filter == 'confirmed' %}bg-emerald-600 text-white shadow-sm{% else %}bg-white text-slate-600 hover:bg-slate-100 border border-slate-200{% endif %}">
+            <span>Dikonfirmasi</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] {% if status_filter == 'confirmed' %}bg-white/20 text-white{% else %}bg-emerald-50 text-emerald-700{% endif %}">{{ confirmed_count }}</span>
+        </a>
+
+        <a href="{% url 'dashboard_order_list' %}?status=rejected{% if search_query %}&q={{ search_query }}{% endif %}" 
+            class="px-4 py-2.5 rounded-xl transition flex items-center gap-2 whitespace-nowrap {% if status_filter == 'rejected' %}bg-rose-600 text-white shadow-sm{% else %}bg-white text-slate-600 hover:bg-slate-100 border border-slate-200{% endif %}">
+            <span>Ditolak</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] {% if status_filter == 'rejected' %}bg-white/20 text-white{% else %}bg-rose-50 text-rose-700{% endif %}">{{ rejected_count }}</span>
+        </a>
+    </div>
+
+    <!-- Orders Table -->
+    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+                <thead>
+                    <tr class="border-b border-slate-100 text-slate-400 font-bold uppercase tracking-wider">
+                        <th class="pb-3 pl-2">Kode Pesanan</th>
+                        <th class="pb-3">Tanggal</th>
+                        <th class="pb-3">Penerima & HP</th>
+                        <th class="pb-3">Metode & Bank</th>
+                        <th class="pb-3">Total Transaksi</th>
+                        <th class="pb-3">Bukti Pembayaran</th>
+                        <th class="pb-3">Status</th>
+                        <th class="pb-3 pr-2 text-right">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    {% for order in orders %}
+                    <tr class="hover:bg-slate-50/70 transition">
+                        <td class="py-4 pl-2 font-mono font-bold text-[#1E293B]">
+                            #{{ order.order_code }}
+                        </td>
+                        <td class="py-4 text-slate-500">
+                            {{ order.created_at|date:"d M Y, H:i" }}
+                        </td>
+                        <td class="py-4">
+                            <span class="font-bold text-slate-800 block">{{ order.recipient_name }}</span>
+                            <span class="text-slate-400 text-[11px]">{{ order.recipient_phone }}</span>
+                        </td>
+                        <td class="py-4">
+                            {% if order.payment_method == 'cash_walkin' %}
+                                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200">
+                                    💵 Tunai / Walk-in
+                                </span>
+                            {% else %}
+                                <span class="font-bold text-slate-700 block text-xs">{{ order.selected_bank.bank_name|default:"Transfer Bank" }}</span>
+                                <span class="text-[10px] text-slate-400">Transfer</span>
+                            {% endif %}
+                        </td>
+                        <td class="py-4 font-black text-slate-800">
+                            {{ order.formatted_total }}
+                        </td>
+                        <td class="py-4">
+                            {% if order.payment_method == 'cash_walkin' %}
+                                <span class="text-emerald-600 font-bold text-[11px] flex items-center gap-1">
+                                    <span>✓</span> Kasir Toko
+                                </span>
+                            {% elif order.payment_proof %}
+                            <button type="button" onclick="openDashboardImageModal('{{ order.payment_proof.url }}', 'Bukti Transfer #{{ order.order_code }}')" class="px-2.5 py-1 rounded-lg border border-slate-200 hover:border-[#8080FF] hover:bg-[#8080FF]/10 text-[#8080FF] text-[11px] font-bold flex items-center gap-1 transition">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                <span>Lihat Struk</span>
+                            </button>
+                            {% else %}
+                            <span class="text-slate-400 italic text-[11px]">Belum ada</span>
+                            {% endif %}
+                        </td>
+                        <td class="py-4">
+                            <span class="px-2.5 py-1 rounded-full text-[11px] font-bold border {{ order.status_badge_class }}">
+                                {{ order.get_status_display }}
+                            </span>
+                        </td>
+                        <td class="py-4 pr-2 text-right">
+                            <div class="inline-flex items-center gap-1.5">
+                                <a href="{% url 'dashboard_order_detail' order.id %}" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-[#8080FF] hover:text-white text-slate-700 font-bold text-[11px] transition inline-flex items-center gap-1">
+                                    Tinjau &rarr;
+                                </a>
+                                <a href="{% url 'dashboard_order_delete' order.id %}" class="p-1.5 rounded-lg border border-slate-200 text-rose-500 hover:bg-rose-50 transition" title="Hapus Pesanan">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="text-center py-10 text-slate-400">
+                            Tidak ada data transaksi pesanan yang sesuai dengan filter.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+

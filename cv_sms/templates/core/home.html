@@ -1,0 +1,655 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}{{ company_profile.hero_title|default:"CV. Setia Makmur Surabaya" }} - Supplier Kain Majun, Sarung Tangan, & Mesin Industri{% endblock %}
+
+{% block content %}
+<!-- HERO SECTION -->
+<section id="home" class="relative overflow-hidden pt-8 pb-16 lg:py-24 bg-gradient-to-b from-white via-slate-50 to-[#F8FAFC]">
+    <!-- Decorative background elements -->
+    <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-[#FF807F]/10 blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 rounded-full bg-[#8080FF]/10 blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <!-- Left Hero Content -->
+            <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FF807F]/10 border border-[#FF807F]/20 text-[#FF807F] text-xs font-extrabold tracking-wide uppercase">
+                    <span class="w-2 h-2 rounded-full bg-[#FF807F] animate-pulse"></span>
+                    Supplier Resmi Industri & Konveksi Surabaya
+                </div>
+
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-[#1E293B] tracking-tight leading-[1.15]">
+                    Solusi Terpercaya Kebutuhan <span class="brand-gradient-text">Industri & Pabrik</span> Anda
+                </h1>
+
+                <p class="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal">
+                    {{ company_profile.hero_subtitle|default:"Menyediakan kain majun, sarung tangan kerja, tali rafia, masker, serta mesin industri berkualitas dengan jaminan harga grosir terbaik dan stok selalu siap." }}
+                </p>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                    <a href="#products" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-[#FF807F] hover:bg-[#f26e6d] text-white font-bold text-base shadow-lg shadow-[#FF807F]/30 hover:shadow-xl hover:shadow-[#FF807F]/40 transition transform hover:-translate-y-0.5 text-center flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                        Lihat Katalog Produk
+                    </a>
+                    <a href="https://wa.me/{{ company_profile.clean_whatsapp|default:'6281330780729' }}?text=Halo%20CV.%20Setia%20Makmur%20Surabaya,%20saya%20tertarik%20dengan%20produk%20Anda" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white hover:bg-slate-50 text-[#1E293B] border-2 border-slate-200 font-bold text-base shadow-sm transition transform hover:-translate-y-0.5 text-center flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                        Hubungi WhatsApp
+                    </a>
+                </div>
+
+                <!-- Floating Search Capsule (Live Instant Search) -->
+                <div class="relative w-full max-w-xl mx-auto lg:mx-0 pt-2" id="hero-search-wrapper">
+                    <div class="relative flex items-center bg-white/95 backdrop-blur-md rounded-2xl sm:rounded-full border-2 border-slate-200 hover:border-[#FF807F]/60 focus-within:border-[#FF807F] focus-within:ring-4 focus-within:ring-[#FF807F]/20 shadow-lg shadow-slate-200/50 transition-all duration-300 p-1.5">
+                        <!-- Search Icon SVG -->
+                        <div class="pl-3.5 pr-2 text-slate-400 flex items-center pointer-events-none">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                        </div>
+                        
+                        <!-- Search Input -->
+                        <input 
+                            type="text" 
+                            id="live-search-input" 
+                            autocomplete="off" 
+                            placeholder="Cari kain majun, sarung tangan, tali rafia, mesin..." 
+                            class="w-full bg-transparent border-0 text-sm sm:text-base text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-0 py-2 pr-2"
+                        >
+                        
+                        <!-- Clear Button ('X') -->
+                        <button 
+                            type="button" 
+                            id="btn-clear-search" 
+                            class="hidden p-1.5 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100 transition mr-1 flex-shrink-0"
+                            title="Hapus pencarian"
+                        >
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+                        
+                        <!-- Action Link Button -->
+                        <a href="#products" class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 bg-[#FF807F] hover:bg-[#f26e6d] text-white text-xs font-bold rounded-full shadow-sm transition flex-shrink-0">
+                            <span>Cari</span>
+                        </a>
+                    </div>
+
+                    <!-- Live Dropdown Quick Navigation -->
+                    <div id="search-results-dropdown" class="hidden absolute left-0 right-0 top-full mt-2 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden z-50 divide-y divide-slate-100 max-h-96 overflow-y-auto">
+                        <!-- Populated by Vanilla JS -->
+                    </div>
+                </div>
+
+                <!-- Trust Badges -->
+                <div class="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200">
+                    <div>
+                        <div class="text-xl sm:text-2xl font-black text-[#1E293B]">100%</div>
+                        <div class="text-xs text-slate-500 font-medium">Kualitas Terjamin</div>
+                    </div>
+                    <div>
+                        <div class="text-xl sm:text-2xl font-black text-[#8080FF]">Grosir</div>
+                        <div class="text-xs text-slate-500 font-medium">Harga Terbaik</div>
+                    </div>
+                    <div>
+                        <div class="text-xl sm:text-2xl font-black text-[#FF807F]">Cepat</div>
+                        <div class="text-xs text-slate-500 font-medium">Siap Kirim Rutin</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Hero Card / Visual -->
+            <div class="lg:col-span-5 relative">
+                <div class="relative mx-auto max-w-md bg-white rounded-3xl p-6 shadow-2xl border border-slate-100">
+                    <div class="absolute -top-3 -right-3 px-3 py-1 bg-[#8080FF] text-white text-xs font-bold rounded-full shadow-md">
+                        Siap Kirim ke Pabrik
+                    </div>
+
+                    {% if company_profile.hero_image %}
+                        <div class="w-full h-64 rounded-2xl overflow-hidden mb-5 bg-slate-100">
+                            <img src="{{ company_profile.hero_image.url }}" alt="Hero Image" class="w-full h-full object-cover">
+                        </div>
+                    {% else %}
+                        <!-- Visual Product Card Grid Showcase -->
+                        <div class="w-full h-56 rounded-2xl bg-gradient-to-br from-[#FF807F]/20 via-[#8080FF]/20 to-slate-100 flex flex-col items-center justify-center p-6 text-center mb-5 border border-dashed border-slate-200">
+                            <div class="w-16 h-16 rounded-2xl bg-white shadow-md flex items-center justify-center mb-3">
+                                <img src="{% static 'images/logo.png' %}" alt="Logo" class="w-12 h-12 object-contain" onerror="this.onerror=null; this.src='https://placehold.co/100x100/FF807F/FFFFFF?text=SMS';">
+                            </div>
+                            <h3 class="font-bold text-[#1E293B] text-base">CV. Setia Makmur Surabaya</h3>
+                            <p class="text-xs text-slate-500 mt-1">Penyedia Perlengkapan Industri & Konveksi</p>
+                        </div>
+                    {% endif %}
+
+                    <!-- Quick Highlight Points -->
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
+                            <div class="w-8 h-8 rounded-lg bg-[#FF807F]/20 text-[#FF807F] flex items-center justify-center font-bold text-sm">✓</div>
+                            <div class="text-xs">
+                                <span class="font-bold text-slate-800 block">Kain Majun Katun Pilihan</span>
+                                <span class="text-slate-500">Daya serap minyak & oli optimal</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
+                            <div class="w-8 h-8 rounded-lg bg-[#8080FF]/20 text-[#8080FF] flex items-center justify-center font-bold text-sm">✓</div>
+                            <div class="text-xs">
+                                <span class="font-bold text-slate-800 block">Sarung Tangan & Masker Pabrik</span>
+                                <span class="text-slate-500">Standar keselamatan kerja nyaman</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-sm">✓</div>
+                            <div class="text-xs">
+                                <span class="font-bold text-slate-800 block">Mesin Industri & Tali Rafia</span>
+                                <span class="text-slate-500">Awet, bertenaga, dan teruji</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT SECTION -->
+<section id="about" class="py-20 bg-white border-y border-slate-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto text-center mb-16 space-y-4">
+            <span class="text-[#8080FF] text-xs font-extrabold uppercase tracking-widest bg-[#8080FF]/10 px-3 py-1 rounded-full">
+                Tentang Perusahaan
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-[#1E293B] tracking-tight">
+                Membangun Kepercayaan dengan Kualitas & Pelayanan Nyata
+            </h2>
+            <p class="text-slate-600 text-base leading-relaxed">
+                {{ company_profile.about_text|linebreaksbr|default:"CV. Setia Makmur Surabaya beroperasi sebagai mitra andalan pengadaan alat perlengkapan industri dan manufaktur di Surabaya dan Jawa Timur." }}
+            </p>
+        </div>
+
+        <!-- 3 Feature Pillars -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-slate-50 hover:bg-white rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                <div class="w-14 h-14 rounded-2xl bg-[#FF807F]/20 text-[#FF807F] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                </div>
+                <h3 class="text-lg font-bold text-[#1E293B] mb-2">Kualitas Bahan Terpilih</h3>
+                <p class="text-sm text-slate-500 leading-relaxed">
+                    Setiap kain majun, sarung tangan, masker, dan tali rafia kami melewati seleksi ketat untuk memastikan daya guna optimal di lapangan.
+                </p>
+            </div>
+
+            <div class="bg-slate-50 hover:bg-white rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                <div class="w-14 h-14 rounded-2xl bg-[#8080FF]/20 text-[#8080FF] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <h3 class="text-lg font-bold text-[#1E293B] mb-2">Harga Grosir Bersaing</h3>
+                <p class="text-sm text-slate-500 leading-relaxed">
+                    Skema harga langsung dari pusat distribusi, memudahkan efisiensi anggaran operasional pabrik, bengkel, dan konveksi Anda.
+                </p>
+            </div>
+
+            <div class="bg-slate-50 hover:bg-white rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
+                <h3 class="text-lg font-bold text-[#1E293B] mb-2">Respon Cepat & Siap Kirim</h3>
+                <p class="text-sm text-slate-500 leading-relaxed">
+                    Staf siap melayani pesanan kilat, suplai berkala mingguan/bulanan, hingga pengiriman armada langsung ke lokasi industri Anda.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PRODUCT CATALOG SECTION -->
+<section id="products" class="py-20 bg-[#F8FAFC]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Header & Search -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div>
+                <span class="text-[#FF807F] text-xs font-extrabold uppercase tracking-widest bg-[#FF807F]/10 px-3 py-1 rounded-full">
+                    Katalog Unggulan
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-[#1E293B] tracking-tight mt-2">
+                    Produk & Perlengkapan Kerja
+                </h2>
+                <p class="text-sm text-slate-500 mt-1">
+                    Pilih produk yang Anda butuhkan, tentukan jumlah, dan langsung checkout dalam satu langkah mudah.
+                </p>
+            </div>
+
+            <!-- Instant Search Input (Vanilla JS) -->
+            <div class="relative w-full md:w-72">
+                <input type="text" id="product-search-input" placeholder="Cari nama produk..." 
+                    class="w-full pl-10 pr-4 py-2.5 rounded-2xl border border-slate-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-[#FF807F] shadow-sm">
+                <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </div>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="product-grid">
+            {% for product in products %}
+            <div id="product-card-{{ product.id }}" class="product-card bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group" data-name="{{ product.name|lower }}" data-product-name="{{ product.name|lower }}" data-product-desc="{{ product.description|lower|default:'' }}">
+                <!-- Product Image Banner -->
+                <div class="relative h-56 bg-slate-100 overflow-hidden">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    {% else %}
+                        <!-- Fallback stylized placeholder -->
+                        <div class="w-full h-full bg-gradient-to-tr from-slate-100 via-slate-50 to-[#FF807F]/10 flex flex-col items-center justify-center p-4 text-center">
+                            <div class="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center text-[#FF807F] mb-2 font-black text-xl">
+                                {{ product.name|slice:":2"|upper }}
+                            </div>
+                            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">CV. Setia Makmur</span>
+                        </div>
+                    {% endif %}
+
+                    <!-- Unit Badge -->
+                    <div class="absolute top-3.5 right-3.5 bg-white/90 backdrop-blur-sm text-slate-800 text-xs font-extrabold px-3 py-1 rounded-full shadow-sm border border-slate-200/50">
+                        Per {{ product.unit }}
+                    </div>
+                </div>
+
+                <!-- Product Body -->
+                <div class="p-6 flex-1 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold text-[#1E293B] group-hover:text-[#FF807F] transition leading-snug">
+                            {{ product.name }}
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-2 line-clamp-2 leading-relaxed">
+                            {{ product.description|default:"Produk berkualitas standar industri dari CV. Setia Makmur Surabaya." }}
+                        </p>
+                    </div>
+
+                    <!-- Price & Add to Cart Action -->
+                    <div class="pt-6 mt-4 border-t border-slate-100">
+                        <div class="flex items-baseline justify-between mb-4">
+                            <div>
+                                <span class="text-xs text-slate-400 block font-medium">Harga Grosir:</span>
+                                <span class="text-xl font-extrabold text-[#1E293B]">
+                                    {{ product.formatted_price }}
+                                </span>
+                                <span class="text-xs text-slate-400 font-semibold">/ {{ product.unit }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Add to Cart Form with Quantity Stepper -->
+                        <form action="{% url 'cart_add' product.id %}" method="POST" class="add-to-cart-form flex items-center gap-2">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{% url 'home' %}#products">
+                            
+                            <!-- Quantity Controls (Vanilla JS) -->
+                            <div class="flex items-center border border-slate-200 rounded-xl bg-slate-50 overflow-hidden w-28">
+                                <button type="button" class="btn-qty-minus px-2.5 py-2 text-slate-600 hover:bg-slate-200 text-sm font-bold transition select-none">-</button>
+                                <input type="number" name="quantity" value="1" min="1" class="qty-input w-full text-center bg-transparent border-0 text-sm font-bold text-slate-800 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                                <button type="button" class="btn-qty-plus px-2.5 py-2 text-slate-600 hover:bg-slate-200 text-sm font-bold transition select-none">+</button>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" class="flex-1 py-2.5 px-3 rounded-xl bg-[#FF807F] hover:bg-[#f26e6d] text-white text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-sm hover:shadow group/btn">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+                                <span>Tambah ke Keranjang</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-span-3 text-center py-16 bg-white rounded-3xl border border-dashed border-slate-300">
+                <p class="text-slate-500 font-medium">Belum ada produk aktif saat ini.</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- No Results state for search -->
+        <div id="no-search-results" class="hidden col-span-1 sm:col-span-2 lg:col-span-3 text-center py-16 px-6 bg-white rounded-3xl border border-dashed border-slate-300 mt-6 shadow-sm space-y-4">
+            <div class="w-16 h-16 rounded-2xl bg-[#FF807F]/10 text-[#FF807F] flex items-center justify-center mx-auto">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold text-slate-800">Produk tidak ditemukan</h3>
+                <p class="text-xs sm:text-sm text-slate-500 max-w-md mx-auto mt-1 leading-relaxed">
+                    Butuh spesifikasi khusus? Hubungi Admin via WhatsApp
+                </p>
+            </div>
+            <div>
+                <a href="https://wa.me/{{ company_profile.clean_whatsapp|default:'6281330780729' }}?text=Halo%20CV.%20Setia%20Makmur%20Surabaya,%20saya%20mencari%20produk%20spesifikasi%20khusus" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm shadow-md transition transform hover:-translate-y-0.5">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                    <span>Hubungi Admin via WhatsApp</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- CONTACT & LOCATION SECTION -->
+<section id="contact" class="py-20 bg-white border-t border-slate-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <div class="lg:col-span-5 space-y-6">
+                <span class="text-[#8080FF] text-xs font-extrabold uppercase tracking-widest bg-[#8080FF]/10 px-3 py-1 rounded-full">
+                    Hubungi Kami
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-[#1E293B] tracking-tight">
+                    Konsultasi & Pemesanan Skala Besar
+                </h2>
+                <p class="text-slate-600 text-sm leading-relaxed">
+                    Butuh penawaran khusus atau pengiriman rutin tonase besar untuk pabrik Anda? Tim kami siap berdiskusi langsung via WhatsApp maupun telepon kantor.
+                </p>
+
+                <div class="space-y-4 pt-2">
+                    <div class="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                        <div class="w-10 h-10 rounded-xl bg-[#FF807F]/20 text-[#FF807F] flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        </div>
+                        <div>
+                            <span class="text-xs text-slate-400 font-semibold block">Alamat Kantor & Gudang:</span>
+                            <span class="text-sm font-bold text-slate-800">{{ company_profile.address|default:"Jln. Wisma Kedung Asem Indah J-30 Surabaya" }}</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                        <div class="w-10 h-10 rounded-xl bg-[#8080FF]/20 text-[#8080FF] flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                        </div>
+                        <div>
+                            <span class="text-xs text-slate-400 font-semibold block">Telepon Kantor:</span>
+                            <a href="tel:{{ company_profile.phone_office|default:'0318793055' }}" class="text-sm font-bold text-[#8080FF] hover:underline">
+                                {{ company_profile.phone_office|default:"031-8793055" }}
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                        </div>
+                        <div>
+                            <span class="text-xs text-slate-400 font-semibold block">WhatsApp Pemesanan:</span>
+                            <span class="text-sm font-bold text-slate-800">{{ company_profile.phone_whatsapp|default:"081-330780729 / 082 232377866" }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Interactive Bank & Order Banner -->
+            <div class="lg:col-span-7 bg-gradient-to-br from-[#1E293B] to-slate-900 text-white rounded-3xl p-8 sm:p-10 shadow-xl relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 w-64 h-64 rounded-full bg-[#8080FF]/20 blur-2xl"></div>
+
+                <div class="relative z-10 space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-white">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                        Kemudahan Pembayaran Transfer
+                    </div>
+
+                    <h3 class="text-2xl sm:text-3xl font-extrabold tracking-tight">
+                        Didukung Transfer Rekening Resmi Perusahaan
+                    </h3>
+                    <p class="text-sm text-slate-300 leading-relaxed">
+                        Kami menerima pembayaran melalui beberapa rekening bank resmi demi kenyamanan dan keamanan transaksi bisnis Anda.
+                    </p>
+
+                    <!-- Bank cards preview -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                        {% for bank in banks %}
+                        <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                            <span class="text-xs font-extrabold text-[#FF807F] uppercase tracking-wider block">{{ bank.bank_name }}</span>
+                            <span class="font-mono text-base font-bold text-white block mt-0.5">{{ bank.account_number }}</span>
+                            <span class="text-[11px] text-slate-400 block mt-0.5">a.n. {{ bank.account_holder }}</span>
+                        </div>
+                        {% empty %}
+                        <p class="text-xs text-slate-400">Hubungi admin untuk rekening pembayaran.</p>
+                        {% endfor %}
+                    </div>
+
+                    <div class="pt-4">
+                        <a href="{% url 'cart_detail' %}" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#FF807F] hover:bg-[#f26e6d] text-white font-bold text-sm shadow-md transition">
+                            <span>Periksa Keranjang & Checkout</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Product Catalog dataset for instant dual-mode search
+    const productsCatalog = [
+        {% for product in products %}
+        {
+            id: "{{ product.id }}",
+            name: "{{ product.name|escapejs }}",
+            nameLower: "{{ product.name|lower|escapejs }}",
+            descLower: "{{ product.description|lower|escapejs }}",
+            formattedPrice: "{{ product.formatted_price }}",
+            unit: "{{ product.unit|escapejs }}",
+            imageUrl: "{% if product.image %}{{ product.image.url }}{% endif %}",
+            initial: "{{ product.name|slice:':2'|upper|escapejs }}"
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ];
+
+    const liveSearchInput = document.getElementById('live-search-input');
+    const catalogSearchInput = document.getElementById('product-search-input');
+    const btnClearSearch = document.getElementById('btn-clear-search');
+    const searchDropdown = document.getElementById('search-results-dropdown');
+    const heroSearchWrapper = document.getElementById('hero-search-wrapper');
+    const productCards = document.querySelectorAll('.product-card');
+    const noResults = document.getElementById('no-search-results');
+
+    // Dual-Mode Search Handler
+    function handleLiveSearch(query) {
+        const cleanQuery = (query || '').toLowerCase().trim();
+
+        // Synchronize inputs without infinite recursion
+        if (liveSearchInput && liveSearchInput.value !== query) {
+            liveSearchInput.value = query;
+        }
+        if (catalogSearchInput && catalogSearchInput.value !== query) {
+            catalogSearchInput.value = query;
+        }
+
+        // Toggle Clear ('X') Button Visibility
+        if (btnClearSearch) {
+            if (cleanQuery.length > 0) {
+                btnClearSearch.classList.remove('hidden');
+            } else {
+                btnClearSearch.classList.add('hidden');
+            }
+        }
+
+        // ==========================================
+        // MODE 1: Instant In-Page Grid Filtering
+        // ==========================================
+        let visibleCount = 0;
+        productCards.forEach(card => {
+            if (!cleanQuery) {
+                card.classList.remove('hidden');
+                visibleCount++;
+                return;
+            }
+            const name = card.getAttribute('data-product-name') || card.getAttribute('data-name') || '';
+            const desc = card.getAttribute('data-product-desc') || '';
+            if (name.includes(cleanQuery) || desc.includes(cleanQuery)) {
+                card.classList.remove('hidden');
+                visibleCount++;
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+
+        // Toggle Grid Empty State
+        if (noResults) {
+            if (visibleCount === 0 && cleanQuery !== '') {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+            }
+        }
+
+        // ==========================================
+        // MODE 2: Live Dropdown Quick Navigation
+        // ==========================================
+        if (!searchDropdown) return;
+
+        if (cleanQuery.length === 0) {
+            searchDropdown.classList.add('hidden');
+            searchDropdown.innerHTML = '';
+            return;
+        }
+
+        // Filter dataset (top 4-5 matches)
+        const matches = productsCatalog.filter(p => 
+            p.nameLower.includes(cleanQuery) || p.descLower.includes(cleanQuery)
+        ).slice(0, 5);
+
+        if (matches.length > 0) {
+            searchDropdown.innerHTML = `
+                <div class="px-4 py-2 bg-slate-50 border-b border-slate-100 flex items-center justify-between text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                    <span>Hasil Pencarian Cepat (${matches.length})</span>
+                    <span class="text-slate-400">Tekan ESC untuk tutup</span>
+                </div>
+                ${matches.map(item => `
+                    <div class="dropdown-item p-3 hover:bg-slate-50 transition flex items-center justify-between gap-3 cursor-pointer group" data-id="${item.id}">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <div class="w-11 h-11 rounded-xl bg-slate-100 flex-shrink-0 overflow-hidden border border-slate-200/60 flex items-center justify-center">
+                                ${item.imageUrl 
+                                    ? `<img src="${item.imageUrl}" alt="${item.name}" class="w-full h-full object-cover">`
+                                    : `<span class="text-[#FF807F] font-black text-xs">${item.initial}</span>`
+                                }
+                            </div>
+                            <div class="min-w-0">
+                                <h4 class="text-sm font-bold text-slate-800 truncate group-hover:text-[#FF807F] transition leading-tight">${item.name}</h4>
+                                <p class="text-xs font-semibold text-slate-500 mt-0.5">${item.formattedPrice} <span class="text-slate-400 font-normal">/ ${item.unit}</span></p>
+                            </div>
+                        </div>
+                        <button type="button" class="flex-shrink-0 px-3 py-1.5 rounded-xl bg-slate-100 group-hover:bg-[#8080FF] text-slate-600 group-hover:text-white text-xs font-bold transition flex items-center gap-1 shadow-sm">
+                            <span>Lihat</span>
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                `).join('')}
+                <div class="p-2.5 bg-slate-50 text-center border-t border-slate-100">
+                    <a href="#products" class="text-xs font-bold text-[#FF807F] hover:underline">
+                        Lihat semua di katalog grid &darr;
+                    </a>
+                </div>
+            `;
+
+            // Attach click listeners to dropdown items
+            searchDropdown.querySelectorAll('.dropdown-item').forEach(el => {
+                el.addEventListener('click', () => {
+                    const id = el.getAttribute('data-id');
+                    highlightAndScrollToProduct(id);
+                });
+            });
+
+            searchDropdown.classList.remove('hidden');
+        } else {
+            searchDropdown.innerHTML = `
+                <div class="p-5 text-center">
+                    <p class="text-xs font-bold text-slate-700">Produk tidak ditemukan</p>
+                    <p class="text-[11px] text-slate-400 mt-1">Coba kata kunci lain atau hubungi admin via WhatsApp.</p>
+                </div>
+            `;
+            searchDropdown.classList.remove('hidden');
+        }
+    }
+
+    // Scroll & Highlight animation for target product card
+    function highlightAndScrollToProduct(productId) {
+        if (searchDropdown) {
+            searchDropdown.classList.add('hidden');
+        }
+        const targetCard = document.getElementById('product-card-' + productId);
+        if (targetCard) {
+            targetCard.classList.remove('hidden');
+            targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Add prominent temporary highlight
+            targetCard.classList.add('ring-4', 'ring-[#8080FF]', 'border-[#8080FF]', 'shadow-2xl', 'scale-[1.02]');
+            
+            // Remove highlight after 2 seconds
+            setTimeout(() => {
+                targetCard.classList.remove('ring-4', 'ring-[#8080FF]', 'border-[#8080FF]', 'shadow-2xl', 'scale-[1.02]');
+            }, 2000);
+        }
+    }
+
+    // Listeners for Hero Search Input
+    if (liveSearchInput) {
+        liveSearchInput.addEventListener('input', function() {
+            handleLiveSearch(this.value);
+        });
+
+        liveSearchInput.addEventListener('focus', function() {
+            if (this.value.trim().length > 0) {
+                handleLiveSearch(this.value);
+            }
+        });
+    }
+
+    // Listeners for Catalog Search Input
+    if (catalogSearchInput) {
+        catalogSearchInput.addEventListener('input', function() {
+            handleLiveSearch(this.value);
+        });
+    }
+
+    // Clear Button ('X') Event Listener
+    if (btnClearSearch) {
+        btnClearSearch.addEventListener('click', function() {
+            if (liveSearchInput) liveSearchInput.value = '';
+            if (catalogSearchInput) catalogSearchInput.value = '';
+            handleLiveSearch('');
+            if (liveSearchInput) liveSearchInput.focus();
+        });
+    }
+
+    // Close Dropdown on Escape Key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' || e.key === 'Esc') {
+            if (searchDropdown) {
+                searchDropdown.classList.add('hidden');
+            }
+        }
+    });
+
+    // Close Dropdown on Click Outside
+    document.addEventListener('click', function(e) {
+        if (heroSearchWrapper && !heroSearchWrapper.contains(e.target)) {
+            if (searchDropdown) {
+                searchDropdown.classList.add('hidden');
+            }
+        }
+    });
+
+    // Quantity Stepper Controls (Vanilla JS)
+    document.querySelectorAll('.add-to-cart-form').forEach(form => {
+        const btnMinus = form.querySelector('.btn-qty-minus');
+        const btnPlus = form.querySelector('.btn-qty-plus');
+        const inputQty = form.querySelector('.qty-input');
+
+        if (btnMinus && btnPlus && inputQty) {
+            btnMinus.addEventListener('click', () => {
+                let currentVal = parseInt(inputQty.value) || 1;
+                if (currentVal > 1) {
+                    inputQty.value = currentVal - 1;
+                }
+            });
+
+            btnPlus.addEventListener('click', () => {
+                let currentVal = parseInt(inputQty.value) || 1;
+                inputQty.value = currentVal + 1;
+            });
+        }
+    });
+</script>
+{% endblock %}
+

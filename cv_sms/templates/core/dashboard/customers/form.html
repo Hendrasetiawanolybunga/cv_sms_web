@@ -1,0 +1,94 @@
+{% extends 'core/dashboard/base_dashboard.html' %}
+
+{% block page_title %}{{ action_title }}{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto space-y-6">
+    
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-black text-[#1E293B] tracking-tight">{{ action_title }}</h1>
+            <p class="text-xs text-slate-500 mt-0.5">Kelola data identitas dan akses akun pelanggan CV. Setia Makmur Surabaya.</p>
+        </div>
+        <a href="{% url 'dashboard_customer_list' %}" class="text-xs font-bold text-slate-600 hover:text-slate-800">
+            &larr; Batal & Kembali
+        </a>
+    </div>
+
+    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-sm">
+        <form method="POST" class="space-y-4">
+            {% csrf_token %}
+
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                    Nama Lengkap Pelanggan <span class="text-rose-500">*</span>
+                </label>
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <p class="text-xs text-rose-500 mt-1">{{ form.name.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                        Nomor HP / WhatsApp <span class="text-rose-500">*</span>
+                    </label>
+                    {{ form.phone }}
+                    {% if form.phone.errors %}
+                        <p class="text-xs text-rose-500 mt-1">{{ form.phone.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                        Alamat Email <span class="text-rose-500">*</span>
+                    </label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <p class="text-xs text-rose-500 mt-1">{{ form.email.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                    Password {% if not is_edit %}<span class="text-rose-500">*</span>{% else %}(Opsional){% endif %}
+                </label>
+                {{ form.password }}
+                {% if form.password.errors %}
+                    <p class="text-xs text-rose-500 mt-1">{{ form.password.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                    Alamat Pengiriman Utama
+                </label>
+                {{ form.address }}
+                {% if form.address.errors %}
+                    <p class="text-xs text-rose-500 mt-1">{{ form.address.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div class="pt-2">
+                <label class="flex items-center gap-3 cursor-pointer select-none">
+                    {{ form.is_active }}
+                    <span class="text-xs font-bold text-slate-700">Status Akun Aktif (Dapat login dan membuat pesanan)</span>
+                </label>
+            </div>
+
+            <div class="pt-6 border-t border-slate-100 flex items-center justify-end gap-3">
+                <a href="{% url 'dashboard_customer_list' %}" class="px-5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 transition">
+                    Batal
+                </a>
+                <button type="submit" class="px-6 py-2.5 rounded-xl bg-[#8080FF] hover:bg-[#6e6ef2] text-white text-xs font-bold shadow-md transition">
+                    Simpan Pelanggan
+                </button>
+            </div>
+        </form>
+    </div>
+
+</div>
+{% endblock %}
+

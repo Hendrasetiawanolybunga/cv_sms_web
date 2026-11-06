@@ -1,0 +1,246 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dashboard Admin - CV. Setia Makmur Surabaya{% endblock %}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'images/logo.png' %}">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            primary: '#FF807F',
+                            primaryHover: '#f26e6d',
+                            secondary: '#8080FF',
+                            secondaryHover: '#6e6ef2',
+                            slate: '#1E293B',
+                            darker: '#0F172A',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col lg:flex-row">
+
+    <!-- Mobile Header -->
+    <header class="lg:hidden bg-[#1E293B] text-white px-4 py-3 flex items-center justify-between sticky top-0 z-40 border-b border-slate-700">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-white p-0.5">
+                <img src="{% static 'images/logo.png' %}" alt="Logo" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='https://placehold.co/100x100/FF807F/FFFFFF?text=SMS';">
+            </div>
+            <span class="font-extrabold text-sm tracking-tight">CV. Setia Makmur <span class="text-[#FF807F]">Admin</span></span>
+        </div>
+        <button type="button" id="sidebar-toggle-btn" class="p-2 rounded-lg bg-slate-800 text-slate-300 hover:text-white">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>
+        </button>
+    </header>
+
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-[#1E293B] text-slate-300 flex flex-col justify-between transform -translate-x-full lg:translate-x-0 transition-transform duration-300 lg:static lg:min-h-screen border-r border-slate-800">
+        <div>
+            <!-- Sidebar Header / Logo -->
+            <div class="p-6 border-b border-slate-800 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-white p-1 shadow-sm flex items-center justify-center">
+                        <img src="{% static 'images/logo.png' %}" alt="Logo" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='https://placehold.co/100x100/FF807F/FFFFFF?text=SMS';">
+                    </div>
+                    <div>
+                        <h2 class="text-white font-extrabold text-sm tracking-tight">CV. SETIA MAKMUR</h2>
+                        <span class="text-[10px] font-bold text-[#FF807F] tracking-widest uppercase block">Internal Admin</span>
+                    </div>
+                </div>
+                <button type="button" id="sidebar-close-btn" class="lg:hidden text-slate-400 hover:text-white">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="p-4 space-y-1.5 text-xs font-semibold">
+                <a href="{% url 'dashboard_index' %}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition {% if request.resolver_match.url_name == 'dashboard_index' %}bg-[#FF807F] text-white shadow-md shadow-[#FF807F]/20 font-bold{% else %}text-slate-400 hover:text-white hover:bg-slate-800{% endif %}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+                    Ringkasan Dashboard
+                </a>
+
+                <a href="{% url 'dashboard_order_list' %}" class="flex items-center justify-between px-4 py-3 rounded-xl transition {% if 'order' in request.resolver_match.url_name %}bg-[#8080FF] text-white shadow-md shadow-[#8080FF]/20 font-bold{% else %}text-slate-400 hover:text-white hover:bg-slate-800{% endif %}">
+                    <div class="flex items-center gap-3">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                        Transaksi & Bukti Transfer
+                    </div>
+                </a>
+
+                <a href="{% url 'dashboard_product_list' %}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition {% if 'product' in request.resolver_match.url_name %}bg-[#FF807F] text-white shadow-md shadow-[#FF807F]/20 font-bold{% else %}text-slate-400 hover:text-white hover:bg-slate-800{% endif %}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                    Kelola Produk
+                </a>
+
+                <a href="{% url 'dashboard_settings' %}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition {% if request.resolver_match.url_name == 'dashboard_settings' %}bg-[#8080FF] text-white shadow-md shadow-[#8080FF]/20 font-bold{% else %}text-slate-400 hover:text-white hover:bg-slate-800{% endif %}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                    Profil Perusahaan
+                </a>
+
+                <a href="{% url 'dashboard_bank_list' %}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition {% if 'bank' in request.resolver_match.url_name %}bg-[#8080FF] text-white shadow-md font-bold{% else %}text-slate-400 hover:text-white hover:bg-slate-800{% endif %}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                    Rekening Bank Tujuan
+                </a>
+
+                <a href="{% url 'dashboard_customer_list' %}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition {% if 'customer' in request.resolver_match.url_name %}bg-[#8080FF] text-white shadow-md font-bold{% else %}text-slate-400 hover:text-white hover:bg-slate-800{% endif %}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                    Data Pelanggan
+                </a>
+
+                <a href="{% url 'dashboard_user_list' %}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition {% if 'user' in request.resolver_match.url_name %}bg-[#8080FF] text-white shadow-md font-bold{% else %}text-slate-400 hover:text-white hover:bg-slate-800{% endif %}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/></svg>
+                    User Internal (Staf/Admin)
+                </a>
+
+                <div class="pt-4 border-t border-slate-800 my-2"></div>
+
+                <a href="{% url 'home' %}" target="_blank" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition">
+                    <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    Lihat Website Publik &rarr;
+                </a>
+            </nav>
+        </div>
+
+        <!-- Sidebar Footer: Current User & Logout -->
+        <div class="p-4 border-t border-slate-800 bg-slate-900/40">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-[#8080FF]/20 text-[#8080FF] flex items-center justify-center font-bold text-xs uppercase">
+                        {{ request.user.username|slice:":1" }}
+                    </div>
+                    <div class="text-xs">
+                        <span class="font-bold text-white block truncate max-w-[120px]">{{ request.user.username }}</span>
+                        <span class="text-[10px] text-slate-400">
+                            {% if request.user.is_superuser %}Superuser{% else %}Staf Admin{% endif %}
+                        </span>
+                    </div>
+                </div>
+                <a href="{% url 'dashboard_logout' %}" class="p-2 text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 rounded-lg transition" title="Logout">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col min-w-0">
+        <!-- Topbar -->
+        <header class="hidden lg:flex items-center justify-between px-8 py-4 bg-white border-b border-slate-200">
+            <div class="flex items-center gap-2 text-xs text-slate-500 font-medium">
+                <span>Dashboard Internal</span>
+                <span>/</span>
+                <span class="text-slate-800 font-bold">{% block page_title %}Beranda{% endblock %}</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Sesi Admin Aktif
+                </span>
+                <a href="{% url 'dashboard_logout' %}" class="text-xs font-bold text-rose-600 hover:text-rose-800 transition">
+                    Keluar
+                </a>
+            </div>
+        </header>
+
+        <!-- Messages / Toast Notifications -->
+        {% if messages %}
+        <div class="p-6 pb-0 space-y-2">
+            {% for message in messages %}
+            <div class="p-4 rounded-2xl border text-sm flex items-center justify-between
+                {% if message.tags == 'success' %}bg-emerald-50 text-emerald-900 border-emerald-200
+                {% elif message.tags == 'error' %}bg-rose-50 text-rose-900 border-rose-200
+                {% else %}bg-sky-50 text-sky-900 border-sky-200{% endif %}">
+                <span>{{ message }}</span>
+                <button type="button" onclick="this.parentElement.remove()" class="text-slate-400 hover:text-slate-600">&times;</button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Page Body Content -->
+        <main class="flex-1 p-6 lg:p-8">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <!-- Universal Image Modal Preview for Payment Proofs and Products -->
+    <div id="dashboard-image-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="relative max-w-3xl w-full bg-white rounded-3xl overflow-hidden shadow-2xl">
+            <div class="flex items-center justify-between p-4 border-b border-slate-100">
+                <h3 class="font-bold text-sm text-slate-800" id="dash-modal-title">Pratinjau Gambar</h3>
+                <button type="button" onclick="closeDashboardImageModal()" class="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="p-4 bg-slate-100 flex items-center justify-center max-h-[80vh] overflow-auto">
+                <img id="dash-modal-img" src="" alt="Pratinjau" class="max-w-full max-h-[75vh] rounded-xl object-contain shadow-md">
+            </div>
+        </div>
+    </div>
+
+    <!-- Vanilla JS Scripts -->
+    <script>
+        // Sidebar Toggle for Mobile
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggleBtn = document.getElementById('sidebar-toggle-btn');
+        const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
+
+        if (sidebarToggleBtn && sidebar) {
+            sidebarToggleBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('-translate-x-full');
+            });
+        }
+        if (sidebarCloseBtn && sidebar) {
+            sidebarCloseBtn.addEventListener('click', () => {
+                sidebar.classList.add('-translate-x-full');
+            });
+        }
+
+        // Universal Image Modal
+        function openDashboardImageModal(url, title = 'Pratinjau Gambar') {
+            document.getElementById('dash-modal-img').src = url;
+            document.getElementById('dash-modal-title').textContent = title;
+            document.getElementById('dashboard-image-modal').classList.remove('hidden');
+        }
+
+        function closeDashboardImageModal() {
+            document.getElementById('dashboard-image-modal').classList.add('hidden');
+        }
+
+        const imgModal = document.getElementById('dashboard-image-modal');
+        if (imgModal) {
+            imgModal.addEventListener('click', function(e) {
+                if (e.target === this) closeDashboardImageModal();
+            });
+        }
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
+

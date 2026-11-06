@@ -1,0 +1,47 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# Virtual Environments
+env/
+env1/
+venv/
+ENV/
+
+# Database SQLite lokal
+db.sqlite3
+db.sqlite3-journal
+*.sqlite3
+*.sqlite3-journal
+
+# Staticfiles collected
+staticfiles/
+
+# Media dinamis lokal (pertahankan folder dengan .gitkeep)
+media/products/*
+!media/products/.gitkeep
+media/payment_proofs/*
+!media/payment_proofs/.gitkeep
+media/company/*
+!media/company/.gitkeep
+
+# IDEs & Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Environment / Secrets
+.env
+local_settings.py
+

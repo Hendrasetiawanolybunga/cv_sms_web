@@ -1,0 +1,149 @@
+{% extends 'core/dashboard/base_dashboard.html' %}
+{% load static %}
+
+{% block page_title %}Pengaturan Profil Perusahaan{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto space-y-6">
+    
+    <div>
+        <h1 class="text-2xl font-black text-[#1E293B] tracking-tight">Pengaturan Profil Perusahaan</h1>
+        <p class="text-xs text-slate-500 mt-0.5">Kelola identitas, alamat, nomor telepon kantor, WhatsApp, dan narasi tentang perusahaan pada kartu nama.</p>
+    </div>
+
+    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-sm">
+        <form method="POST" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+
+            <!-- Hero Title & Subtitle -->
+            <div class="space-y-4 pb-6 border-b border-slate-100">
+                <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-[#FF807F]"></span>
+                    Tampilan Bagian Utama (Hero Section)
+                </h2>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                        Judul Utama (Hero Title) <span class="text-rose-500">*</span>
+                    </label>
+                    {{ form.hero_title }}
+                    {% if form.hero_title.errors %}
+                        <p class="text-xs text-rose-500 mt-1">{{ form.hero_title.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                        Subjudul (Hero Subtitle)
+                    </label>
+                    {{ form.hero_subtitle }}
+                    {% if form.hero_subtitle.errors %}
+                        <p class="text-xs text-rose-500 mt-1">{{ form.hero_subtitle.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                        Gambar Hero Utama (Opsional)
+                    </label>
+                    {% if profile.hero_image %}
+                    <div class="mb-3 flex items-center gap-3 p-3 bg-slate-50 rounded-2xl border border-slate-200">
+                        <img src="{{ profile.hero_image.url }}" alt="Hero" class="w-16 h-16 object-cover rounded-xl">
+                        <div class="text-xs">
+                            <span class="font-bold text-slate-700 block">Gambar Hero Saat Ini</span>
+                            <span class="text-slate-400">Pilih file baru di bawah untuk mengganti</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {{ form.hero_image }}
+                    {% if form.hero_image.errors %}
+                        <p class="text-xs text-rose-500 mt-1">{{ form.hero_image.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- About Text -->
+            <div class="space-y-4 pb-6 border-b border-slate-100">
+                <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-[#8080FF]"></span>
+                    Tentang Perusahaan (About Section)
+                </h2>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                        Deskripsi Lengkap Tentang CV. Setia Makmur Surabaya
+                    </label>
+                    {{ form.about_text }}
+                    {% if form.about_text.errors %}
+                        <p class="text-xs text-rose-500 mt-1">{{ form.about_text.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Kontak & Alamat Resmi -->
+            <div class="space-y-4 pb-6 border-b border-slate-100">
+                <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                    Alamat & Kontak Resmi (Sesuai Kartu Nama)
+                </h2>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                        Alamat Kantor / Gudang
+                    </label>
+                    {{ form.address }}
+                    <span class="text-[11px] text-slate-400 mt-0.5 block">Contoh: Jln. Wisma Kedung Asem Indah J-30 Surabaya</span>
+                    {% if form.address.errors %}
+                        <p class="text-xs text-rose-500 mt-1">{{ form.address.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                            Telepon Kantor
+                        </label>
+                        {{ form.phone_office }}
+                        <span class="text-[11px] text-slate-400 mt-0.5 block">Contoh: 031-8793055</span>
+                        {% if form.phone_office.errors %}
+                            <p class="text-xs text-rose-500 mt-1">{{ form.phone_office.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                            HP / WhatsApp
+                        </label>
+                        {{ form.phone_whatsapp }}
+                        <span class="text-[11px] text-slate-400 mt-0.5 block">Contoh: 081-330780729 / 082 232377866</span>
+                        {% if form.phone_whatsapp.errors %}
+                            <p class="text-xs text-rose-500 mt-1">{{ form.phone_whatsapp.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                        Email Resmi
+                    </label>
+                    {{ form.email }}
+                    <span class="text-[11px] text-slate-400 mt-0.5 block">Contoh: setia.makmur60@yahoo.com</span>
+                    {% if form.email.errors %}
+                        <p class="text-xs text-rose-500 mt-1">{{ form.email.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="flex items-center justify-end gap-3 pt-2">
+                <button type="submit" class="px-6 py-3 rounded-xl bg-[#8080FF] hover:bg-[#6e6ef2] text-white text-xs font-bold shadow-md transition transform hover:-translate-y-0.5">
+                    Simpan Perubahan Profil
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+{% endblock %}
+

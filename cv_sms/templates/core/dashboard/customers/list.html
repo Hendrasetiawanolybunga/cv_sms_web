@@ -1,0 +1,103 @@
+{% extends 'core/dashboard/base_dashboard.html' %}
+{% load static %}
+
+{% block page_title %}Data Pelanggan{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-black text-[#1E293B] tracking-tight">Data Pelanggan Terdaftar</h1>
+            <p class="text-xs text-slate-500 mt-0.5">Daftar pelanggan mandiri CV. Setia Makmur Surabaya beserta riwayat pesanan mereka.</p>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <form method="GET" class="relative">
+                <input type="text" name="q" value="{{ query }}" placeholder="Cari nama, HP, atau email..." 
+                    class="pl-9 pr-4 py-2.5 rounded-xl border border-slate-200 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-[#8080FF] shadow-sm w-48 sm:w-64">
+                <svg class="w-4 h-4 text-slate-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </form>
+
+            <a href="{% url 'dashboard_customer_create' %}" class="px-4 py-2.5 rounded-xl bg-[#8080FF] hover:bg-[#6e6ef2] text-white font-bold text-xs shadow-md transition flex items-center gap-1.5 flex-shrink-0">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+                <span>Tambah Pelanggan</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+                <thead>
+                    <tr class="border-b border-slate-100 text-slate-400 font-bold uppercase tracking-wider">
+                        <th class="pb-3 pl-2">Nama Pelanggan</th>
+                        <th class="pb-3">No. HP / WhatsApp</th>
+                        <th class="pb-3">Email</th>
+                        <th class="pb-3">Alamat</th>
+                        <th class="pb-3">Total Pesanan</th>
+                        <th class="pb-3">Status Akun</th>
+                        <th class="pb-3 pr-2 text-right">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    {% for customer in customers %}
+                    <tr class="hover:bg-slate-50/70 transition">
+                        <td class="py-4 pl-2 font-bold text-slate-800">
+                            {{ customer.name }}
+                        </td>
+                        <td class="py-4 font-mono font-semibold text-slate-700">
+                            {{ customer.phone }}
+                        </td>
+                        <td class="py-4 text-slate-500">
+                            {{ customer.email }}
+                        </td>
+                        <td class="py-4 text-slate-600 max-w-xs truncate">
+                            {{ customer.address|default:"-" }}
+                        </td>
+                        <td class="py-4 font-bold text-slate-800">
+                            {{ customer.orders_count }} Pesanan
+                        </td>
+                        <td class="py-4">
+                            {% if customer.is_active %}
+                                <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                    Aktif
+                                </span>
+                            {% else %}
+                                <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-rose-50 text-rose-700 border border-rose-200">
+                                    Dinonaktifkan
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td class="py-4 pr-2 text-right">
+                            <div class="inline-flex items-center gap-1.5">
+                                <a href="{% url 'dashboard_customer_toggle' customer.id %}" class="p-1.5 rounded-lg border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition" title="Toggle Status Aktif">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                                </a>
+                                <a href="{% url 'dashboard_customer_edit' customer.id %}" class="p-1.5 rounded-lg border border-slate-200 text-[#8080FF] hover:bg-[#8080FF]/10 transition" title="Edit Data Pelanggan">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                </a>
+                                <a href="{% url 'dashboard_customer_detail' customer.id %}" class="p-1.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-100 transition" title="Profil & Pesanan">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                </a>
+                                <a href="{% url 'dashboard_customer_delete' customer.id %}" class="p-1.5 rounded-lg border border-slate-200 text-rose-500 hover:bg-rose-50 transition" title="Hapus Pelanggan">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center py-8 text-slate-400">
+                            Belum ada pelanggan terdaftar.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+

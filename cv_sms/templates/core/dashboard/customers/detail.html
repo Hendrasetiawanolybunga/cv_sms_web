@@ -1,0 +1,125 @@
+{% extends 'core/dashboard/base_dashboard.html' %}
+{% load static %}
+
+{% block page_title %}Detail Pelanggan - {{ customer.name }}{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto space-y-6">
+    
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+            <div class="flex items-center gap-2">
+                <a href="{% url 'dashboard_customer_list' %}" class="text-xs font-bold text-slate-500 hover:text-slate-800">
+                    &larr; Data Pelanggan
+                </a>
+                <span class="text-slate-300">/</span>
+                <span class="text-xs font-bold text-slate-800">{{ customer.name }}</span>
+            </div>
+            <h1 class="text-2xl font-black text-[#1E293B] tracking-tight mt-1">Profil & Riwayat Transaksi Pelanggan</h1>
+        </div>
+
+        <a href="{% url 'dashboard_customer_toggle' customer.id %}" class="px-4 py-2 rounded-xl text-xs font-bold transition {% if customer.is_active %}bg-rose-50 text-rose-600 border border-rose-200 hover:bg-rose-100{% else %}bg-emerald-50 text-emerald-600 border border-emerald-200 hover:bg-emerald-100{% endif %}">
+            {% if customer.is_active %}Nonaktifkan Akun Pelanggan{% else %}Aktifkan Kembali Akun{% endif %}
+        </a>
+    </div>
+
+    <!-- Customer Profile Info Card -->
+    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-sm space-y-4">
+        <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-3 flex items-center justify-between">
+            <span>Rincian Akun</span>
+            <span class="text-xs font-bold {% if customer.is_active %}text-emerald-600{% else %}text-rose-600{% endif %}">
+                {% if customer.is_active %}● Akun Aktif{% else %}● Akun Dinonaktifkan{% endif %}
+            </span>
+        </h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+            <div>
+                <span class="text-slate-400 block">Nama Lengkap:</span>
+                <span class="font-bold text-slate-800 text-sm">{{ customer.name }}</span>
+            </div>
+            <div>
+                <span class="text-slate-400 block">Nomor WhatsApp / HP:</span>
+                <span class="font-bold text-slate-800 text-sm font-mono">{{ customer.phone }}</span>
+            </div>
+            <div>
+                <span class="text-slate-400 block">Alamat Email:</span>
+                <span class="font-bold text-slate-800 text-sm">{{ customer.email }}</span>
+            </div>
+            <div>
+                <span class="text-slate-400 block">Terdaftar Sejak:</span>
+                <span class="font-semibold text-slate-600">{{ customer.created_at|date:"d M Y, H:i" }} WIB</span>
+            </div>
+            <div class="sm:col-span-2">
+                <span class="text-slate-400 block">Alamat Pengiriman Utama:</span>
+                <p class="font-medium text-slate-700 mt-1 p-3 bg-slate-50 rounded-xl border border-slate-200/60">{{ customer.address|default:"Belum mengisi alamat utama"|linebreaksbr }}</p>
+            </div>
+            <div class="sm:col-span-2">
+                <span class="text-slate-400 block">Total Pengeluaran Dikonfirmasi:</span>
+                <span class="font-black text-xl text-[#FF807F] block mt-1">{{ formatted_spent }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order History of Customer -->
+    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-sm space-y-4">
+        <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider border-b border-slate-100 pb-3">
+            Riwayat Pesanan Pelanggan Ini ({{ orders.count }} Pesanan)
+        </h2>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+                <thead>
+                    <tr class="border-b border-slate-100 text-slate-400 font-bold uppercase tracking-wider">
+                        <th class="pb-3 pl-2">Kode Pesanan</th>
+                        <th class="pb-3">Tanggal</th>
+                        <th class="pb-3">Penerima</th>
+                        <th class="pb-3">Bank</th>
+                        <th class="pb-3">Total</th>
+                        <th class="pb-3">Status</th>
+                        <th class="pb-3 pr-2 text-right">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    {% for order in orders %}
+                    <tr class="hover:bg-slate-50/70 transition">
+                        <td class="py-3 pl-2 font-mono font-bold text-[#1E293B]">
+                            #{{ order.order_code }}
+                        </td>
+                        <td class="py-3 text-slate-500">
+                            {{ order.created_at|date:"d M Y, H:i" }}
+                        </td>
+                        <td class="py-3 font-medium text-slate-800">
+                            {{ order.recipient_name }}
+                        </td>
+                        <td class="py-3 text-slate-600">
+                            {{ order.selected_bank.bank_name }}
+                        </td>
+                        <td class="py-3 font-extrabold text-slate-800">
+                            {{ order.formatted_total }}
+                        </td>
+                        <td class="py-3">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold border {{ order.status_badge_class }}">
+                                {{ order.get_status_display }}
+                            </span>
+                        </td>
+                        <td class="py-3 pr-2 text-right">
+                            <a href="{% url 'dashboard_order_detail' order.id %}" class="text-[#8080FF] hover:underline font-bold">
+                                Detail &rarr;
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center py-8 text-slate-400">
+                            Pelanggan ini belum melakukan transaksi pesanan.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
