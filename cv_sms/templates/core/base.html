@@ -8,8 +8,8 @@
     <meta name="description" content="Penyedia kain majun, sarung tangan kerja, tali rafia, masker, dan mesin industri terpercaya di Surabaya.">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}">
-    <link rel="apple-touch-icon" href="{% static 'images/logo.png' %}">
+    <link rel="icon" type="image/png" href="{% static 'images/logo.jpeg' %}">
+    <link rel="apple-touch-icon" href="{% static 'images/logo.jpeg' %}">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -65,7 +65,7 @@
       "alternateName": "CV Setia Makmur",
       "description": "Pabrik dan supplier resmi perlengkapan industri Surabaya: Kain Majun, Sarung Tangan, Tali Rafia, Masker, dan Mesin Industri.",
       "url": "https://cvsetiamakmursurabaya.pythonanywhere.com",
-      "logo": "https://cvsetiamakmursurabaya.pythonanywhere.com{% static 'images/logo.png' %}",
+      "logo": "https://cvsetiamakmursurabaya.pythonanywhere.com{% static 'images/logo.jpeg' %}",
       "telephone": "+62-31-8793055",
       "address": {
         "@type": "PostalAddress",
@@ -157,7 +157,7 @@
             <!-- Brand Logo & Name -->
             <a href="{% url 'home' %}" class="flex items-center gap-3 group flex-shrink-0">
                 <div class="w-11 h-11 rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden flex items-center justify-center p-1 group-hover:scale-105 transition-transform flex-shrink-0">
-                    <img src="{% static 'images/logo.png' %}" alt="Logo CV. Setia Makmur Surabaya" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='https://placehold.co/100x100/FF807F/FFFFFF?text=SMS';">
+                    <img src="{% static 'images/logo.jpeg' %}" alt="Logo CV. Setia Makmur Surabaya" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='https://placehold.co/100x100/FF807F/FFFFFF?text=SMS';">
                 </div>
                 <div>
                     <span class="text-base sm:text-lg font-black tracking-tight text-[#1E293B] block leading-tight">
@@ -237,12 +237,12 @@
     <!-- Mobile Slide-over Drawer & Overlay Backdrop -->
     <div id="mobile-drawer-backdrop" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden transition-opacity duration-300 opacity-0"></div>
 
-    <aside id="mobile-drawer" class="fixed inset-y-0 right-0 z-50 w-full max-w-xs sm:max-w-sm bg-white shadow-2xl flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-in-out border-l border-slate-100" aria-label="Menu Mobile">
+    <aside id="mobile-drawer" class="fixed inset-y-0 right-0 z-[60] w-full max-w-xs sm:max-w-sm bg-white shadow-2xl flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-in-out border-l border-slate-100" aria-label="Menu Mobile">
         <!-- Drawer Header -->
         <div class="p-5 border-b border-slate-100 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl bg-white border border-slate-200 shadow-sm p-1 flex items-center justify-center">
-                    <img src="{% static 'images/logo.png' %}" alt="Logo" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='https://placehold.co/100x100/FF807F/FFFFFF?text=SMS';">
+                    <img src="{% static 'images/logo.jpeg' %}" alt="Logo" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='https://placehold.co/100x100/FF807F/FFFFFF?text=SMS';">
                 </div>
                 <div>
                     <h3 class="font-extrabold text-sm text-slate-800 tracking-tight">CV. SETIA MAKMUR</h3>
@@ -351,7 +351,7 @@
                 <div class="space-y-4">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-xl bg-white p-1">
-                            <img src="{% static 'images/logo.png' %}" alt="Logo" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='https://placehold.co/100x100/FF807F/FFFFFF?text=SMS';">
+                            <img src="{% static 'images/logo.jpeg' %}" alt="Logo" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='https://placehold.co/100x100/FF807F/FFFFFF?text=SMS';">
                         </div>
                         <div>
                             <span class="text-white font-bold text-base block">CV. Setia Makmur</span>
@@ -447,7 +447,7 @@
                     <p>&copy; {% now "Y" %} CV. Setia Makmur Surabaya. Seluruh Hak Cipta Dilindungi.</p>
                     <span class="hidden sm:inline text-slate-700">|</span>
                     <p class="text-slate-400">
-                        Crafted & Developed by <span class="font-extrabold text-[#FF807F]">HOB Digital</span>
+                        Crafted & Developed by <a href="https://wa.me/6285729515776?text=Halo%20HOB%20Digital,%20saya%20tertarik%20dengan%20layanan%20pembuatan%20website" target="_blank" rel="noopener noreferrer" class="font-extrabold text-[#FF807F] hover:text-[#ff9998] hover:underline transition">HOB Digital</a>
                     </p>
                 </div>
                 <div class="flex items-center gap-4">
@@ -462,29 +462,114 @@
 
     <!-- Vanilla JS Interactions -->
     <script>
-        // Customer dropdown toggle
-        const customerBtn = document.getElementById('customer-menu-btn');
-        const customerDropdown = document.getElementById('customer-dropdown');
-        if (customerBtn && customerDropdown) {
-            customerBtn.addEventListener('click', (e) => {
+        // Desktop Sales Dropdown Toggle
+        const salesBtn = document.getElementById('sales-dropdown-btn');
+        const salesMenu = document.getElementById('sales-dropdown-menu');
+        const salesArrow = document.getElementById('sales-dropdown-arrow');
+        const salesWrapper = document.getElementById('sales-dropdown-wrapper');
+
+        function openSalesDropdown() {
+            if (!salesMenu || !salesBtn) return;
+            salesMenu.classList.remove('hidden');
+            salesBtn.setAttribute('aria-expanded', 'true');
+            if (salesArrow) salesArrow.classList.add('rotate-180');
+        }
+
+        function closeSalesDropdown() {
+            if (!salesMenu || !salesBtn) return;
+            salesMenu.classList.add('hidden');
+            salesBtn.setAttribute('aria-expanded', 'false');
+            if (salesArrow) salesArrow.classList.remove('rotate-180');
+        }
+
+        if (salesBtn && salesMenu) {
+            salesBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                customerDropdown.classList.toggle('hidden');
+                const isOpen = !salesMenu.classList.contains('hidden');
+                if (isOpen) {
+                    closeSalesDropdown();
+                } else {
+                    openSalesDropdown();
+                }
             });
+
             document.addEventListener('click', (e) => {
-                if (!customerDropdown.contains(e.target) && !customerBtn.contains(e.target)) {
-                    customerDropdown.classList.add('hidden');
+                if (salesWrapper && !salesWrapper.contains(e.target)) {
+                    closeSalesDropdown();
                 }
             });
         }
 
-        // Mobile menu toggle
-        const mobileBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        if (mobileBtn && mobileMenu) {
-            mobileBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
+        // Mobile Slide-over Drawer Controls
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileDrawer = document.getElementById('mobile-drawer');
+        const mobileBackdrop = document.getElementById('mobile-drawer-backdrop');
+        const mobileCloseBtn = document.getElementById('mobile-drawer-close');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+        function openMobileDrawer() {
+            if (!mobileDrawer || !mobileBackdrop) return;
+            mobileBackdrop.classList.remove('hidden');
+            void mobileBackdrop.offsetWidth; // trigger reflow for smooth opacity transition
+            mobileBackdrop.classList.remove('opacity-0');
+            mobileBackdrop.classList.add('opacity-100');
+
+            mobileDrawer.classList.remove('translate-x-full');
+            mobileDrawer.classList.add('translate-x-0');
+
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeMobileDrawer() {
+            if (!mobileDrawer || !mobileBackdrop) return;
+            mobileBackdrop.classList.remove('opacity-100');
+            mobileBackdrop.classList.add('opacity-0');
+
+            mobileDrawer.classList.remove('translate-x-0');
+            mobileDrawer.classList.add('translate-x-full');
+
+            document.body.classList.remove('overflow-hidden');
+
+            setTimeout(() => {
+                if (mobileDrawer.classList.contains('translate-x-full')) {
+                    mobileBackdrop.classList.add('hidden');
+                }
+            }, 300);
+        }
+
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openMobileDrawer();
             });
         }
+
+        if (mobileCloseBtn) {
+            mobileCloseBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                closeMobileDrawer();
+            });
+        }
+
+        if (mobileBackdrop) {
+            mobileBackdrop.addEventListener('click', () => {
+                closeMobileDrawer();
+            });
+        }
+
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                closeMobileDrawer();
+            });
+        });
+
+        // Global Escape Key Listener
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeSalesDropdown();
+                closeMobileDrawer();
+            }
+        });
 
         // Auto dismiss toast messages after 4 seconds
         const toastItems = document.querySelectorAll('.toast-item');
